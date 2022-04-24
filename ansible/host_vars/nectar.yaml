@@ -3,6 +3,7 @@ availability_zone: melbourne-qh2-uom
 instance_image: 356ff1ed-5960-4ac2-96a1-0c0198e6a999
 instance_key_name: id_grp3
 instance_flavor: uom.mse.2c9g
+hosts_file_absolute_path: /mnt/c/it_project/COMP90024_Ass2/ansible/inventory/hosts.ini
 
 # Volume
 volumes:

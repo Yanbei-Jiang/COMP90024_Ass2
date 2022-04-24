@@ -21,8 +21,10 @@
   loop: '{{ os_instance.results }}'
   when: item.openstack is defined
 
+
+
 - name: Wait for connection
-  ansible.builtin.wait_for:
+  wait_for:
     host: "{{ item.openstack.public_v4 }}"
     port: 22
     timeout: 120
@@ -32,8 +34,20 @@
 
 # Add hosts to Ansible in-memory inventory
 - name: Add host
-  ansible.builtin.add_host:
+  add_host:
     name: '{{ item.openstack.public_v4 }}'
-    groups: COMP90024
+    groups: instances
   loop: '{{ os_instance.results }}'
   when: item.openstack is defined
+
+- name: Create host file
+  copy:
+    content: "[CouchDBMaster]\n{{ groups['instances'][0] }}\n\n[CouchDBSlave]\n{{ groups['instances'][1] }}\n{{ groups['instances'][2] }}\n\n[FrontBackEnd]\n{{ groups['instances'][3] }}\n"
+    dest: "{{ hosts_file_absolute_path }}"
+
+# - name: Assign ipv4 address
+#   lineinfile:
+#     line: "{{ item.openstack.public_v4 }}\n"
+#     dest: "{{ hosts_file_absolute_path }}"
+#   loop: '{{ item.openstack.public_v4 }}'
+#   when: item.openstack is defined
