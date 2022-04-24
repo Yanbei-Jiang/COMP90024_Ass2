@@ -1,7 +1,7 @@
 ---
 # Create an instance on NeCTAR
 - name: Create an instance
-  openstack.cloud.server:
+  os_server:
     name: '{{ item.name }}'
     image: '{{ instance_image }}'
     key_name: '{{ instance_key_name }}'
