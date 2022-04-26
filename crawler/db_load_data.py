@@ -58,7 +58,7 @@ def store_dynamic_to_db(db_name, data):
 
 def get_data_from_db(db_name):
     '''
-
+    Get data from couchdb
     '''
     # get all rows from 
     for id in db_name:
@@ -93,5 +93,5 @@ with open("test.json", 'r') as f:
     curr_row = json.load(f)
     store_dynamic_to_db(dynamic_twitter_db, curr_row)
 
-#
+# read from data
 get_data_from_db(dynamic_twitter_db)

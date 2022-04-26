@@ -1,0 +1,8 @@
+<!-- Host COMP90024_Ass2
+    Hostname github.com
+    IdentityFile=/home/yanbeij/.ssh/id_rsa -->
+Host github.com
+    IdentityFile=/home/yanbeij/.ssh/id_rsa
+    Hostname ssh.github.com
+    Port 443
+    User git
