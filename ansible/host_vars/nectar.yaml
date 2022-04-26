@@ -5,6 +5,7 @@ instance_key_name: id_grp3
 instance_flavor: uom.mse.2c9g
 hosts_file_path: ./hosts
 ssh_private_key_path: /home/yanbeij/.ssh/id_grp3.pem
+github_key_path: /home/yanbeij/.ssh/id_rsa
 
 # Volume
 volumes:

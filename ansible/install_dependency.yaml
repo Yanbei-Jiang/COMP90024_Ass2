@@ -9,6 +9,7 @@
 
   roles:
     - role: common
+    - role: git-clone
     - role: mount-volumes
     - role: docker
 #    - role: wordpress
