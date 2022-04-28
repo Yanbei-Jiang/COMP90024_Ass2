@@ -80,7 +80,8 @@ username = db_info['username']
 password = db_info['password']
 host = db_info['host']
 port = db_info['port']
-db_name = db_info['db_name']
+odl_db_name = db_info['odl_db_name']
+new_db_name = db_info['new_db_name']
 
 # connect the database
 couch = connect_couchdb(username, password, host, port)
