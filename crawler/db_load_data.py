@@ -1,7 +1,19 @@
 import configparser
+from multiprocessing.spawn import old_main_modules
 import os
 import couchdb
 import json
+
+# global variables
+db_info_ini_file = "db_info.ini"
+
+username = ""
+password = ""
+host = ""
+port = ""
+odl_db_name = ""
+new_db_name = ""
+couch = ""
 
 
 def connect_couchdb(username, password, host, port):
@@ -29,9 +41,10 @@ def get_db_into():
     Get the database configuration
     @return the dictionary with user and db's information
     '''
+    global db_info_ini_file
     # read the configuration file
     curpath = os.path.dirname(os.path.realpath(__file__))
-    cfgpath = os.path.join(curpath, "db_info.ini")
+    cfgpath = os.path.join(curpath, db_info_ini_file)
     conf = configparser.ConfigParser()
     conf.read(cfgpath, encoding="utf-8")
 
@@ -49,16 +62,57 @@ def get_db_into():
     return dict
 
 
-def store_dynamic_to_db(db_name, data):
+def initialize_couchdb():
     '''
-    Accept dynamic data and store into specific database
+    Initialize the couchdb
     '''
-    db_name.save(data)
+    print("--------------Initialize the database--------------")
+    global username
+    global password
+    global host
+    global port
+    global odl_db_name
+    global new_db_name
+    global couch
 
+    # set up info
+    db_info = get_db_into()
+    username = db_info['username']
+    password = db_info['password']
+    host = db_info['host']
+    port = db_info['port']
+    odl_db_name = db_info['odl_db_name']
+    new_db_name = db_info['new_db_name']
+
+    # connect the database
+    couch = connect_couchdb(username, password, host, port)
+    print("Initialize the database Successfully")
+
+
+def store_to_backup_db(data):
+    '''
+    Accept data and store into backup database
+    @param data be stored
+    '''
+    global odl_db_name
+    global couch
+    get_spec_db(odl_db_name, couch).save(data)
+
+
+def store_to_processed_db(data):
+    '''
+    Accept data and store into processed databse
+    @param data be stored
+    '''
+    global new_db_name
+    global couch
+    get_spec_db(new_db_name, couch).save(data)
+    
 
 def get_data_from_db(db_name):
     '''
     Get data from couchdb
+    @param db_name
     '''
     # get all rows from 
     for id in db_name:
@@ -72,27 +126,3 @@ def empty_spec_db(couch, db_name):
     @param db_name: the specific database be deleted
     '''
     couch.delete(db_name)
-
-
-# get the user info and db info
-db_info = get_db_into()
-username = db_info['username']
-password = db_info['password']
-host = db_info['host']
-port = db_info['port']
-odl_db_name = db_info['odl_db_name']
-new_db_name = db_info['new_db_name']
-
-# connect the database
-couch = connect_couchdb(username, password, host, port)
-# get the twitter database
-dynamic_twitter_db = get_spec_db('dynamic_twitter', couch)
-old_twitter_db = get_spec_db('old_twitter', couch)
-
-# store data to db
-with open("test.json", 'r') as f:
-    curr_row = json.load(f)
-    store_dynamic_to_db(dynamic_twitter_db, curr_row)
-
-# read from data
-get_data_from_db(dynamic_twitter_db)

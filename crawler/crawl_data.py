@@ -1,8 +1,10 @@
-import tweepy_stream_crawler
 import threading
 import configparser
 import io
 import json
+
+import tweepy_stream_crawler
+import db_load_data
 
 def set_configuration():
     '''
@@ -35,7 +37,7 @@ def set_configuration():
             globals()['listener_'+i] = tweepy_stream_crawler.StreamListener(
                 api_key, api_key_secret, access_token, access_token_secret, 
                 (keywords[list(keywords.keys())[curr_key_words]]), "Thread_"+str(curr_key_words))
-                
+
             # move to the next key words should be searched
             curr_key_words +=1
 
@@ -59,7 +61,15 @@ def start_crawlers():
     listener_account_1.start()
     listener_account_2.start()
     listener_account_3.start()
+    print("Start Three Crawlers Successfully")
 
 
+def initialize_db():
+    '''
+    Provide the API to initialize the couch db
+    '''
+    db_load_data.initialize_couchdb()
+
+
+initialize_db()
 start_crawlers()
-

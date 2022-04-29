@@ -6,11 +6,11 @@ import tweepy
 import threading
 import configparser
 import os.path
+import db_load_data
 
 class StreamListener(threading.Thread, tweepy.Stream):
 
     count = 1
-    # count_for_sleep = 0
     data_since = strftime("%Y-%m-%d_%H:%M:%S", gmtime())
     result_dict ={data_since:[]}
     file_name = data_since[:10]+'.json'
@@ -19,45 +19,48 @@ class StreamListener(threading.Thread, tweepy.Stream):
 
     # initialize
     def __init__(self, api_key, api_key_secret, access_token, access_token_secret, keywords, thread_name):
-        # extend from father
         threading.Thread.__init__(self)
         tweepy.Stream.__init__(self, api_key, api_key_secret, access_token, access_token_secret)
-        # self attributes
         self.keywords = keywords
         self.thread_name = thread_name
-    
+
 
     # Override Tweepy.Stream
     def on_data(self, data):
-        # # count the sleep time
-        # dur_for_sleep = time.perf_counter()-self.start_time
-        # self.count_for_sleep += 1
-
-        # 
         try:
-            data_dict = json.loads(data)
-            place = data_dict['place']
-            json_data = {data_dict['id']:data_dict}
+            # read the data
+            data_raw = json.loads(data)
+            place = data_raw['place']
+            json_data = {data_raw['id']:data_raw}
             if  place != None:
 
-                # generate or open the file to store data
-                if os.path.isfile(self.file_name):
-                    with io.open(self.file_name, 'r') as f:
-                        content = json.load(f) 
-                    content.update(json_data)
-                    with io.open(self.file_name,'w') as f:
-                        json.dump(content,f,indent = 2)
-                else:
-                    with io.open(self.file_name,'w') as f:
-                        json.dump(json_data,f,indent = 2)
-                
+                # store data to db
+                db_load_data.store_to_backup_db(data_raw)
+
+                # store to file
+                # if os.path.isfile(self.file_name):
+                #     with io.open(self.file_name, 'r') as f:
+                #         content = json.load(f) 
+                #     content.update(json_data)
+                #     with io.open(self.file_name,'w') as f:
+                #         json.dump(content,f,indent = 2)
+                # else:
+                #     with io.open(self.file_name,'w') as f:
+                #         json.dump(json_data,f,indent = 2)
+
                 # show the processing
                 i = self.count%10
-                a = '*'* i
-                b = '.'*(10-i)
+                a = '*' * i
+                b = '.' * (10-i)
                 c = (i/10)*100
                 dur = time.perf_counter()-self.start_time
-                print(self.thread_name + '： {:^3.0f}%[{}->{}]{:.2f}s\n'.format(c,a,b,dur),end='')
+                if (self.thread_name == "Thread_0"):
+                    print('\n'+self.thread_name + ': {:^3.0f}%[{}->{}]{:.2f}s'.format(c,a,b,dur),end='')
+                elif (self.thread_name == "Thread_1"):
+                    print('\n'+self.thread_name + ': {:^3.0f}%[{}->{}]{:.2f}s'.format(c,a,b,dur),end='')
+                else:
+                    print('\n'+self.thread_name + ': {:^3.0f}%[{}->{}]{:.2f}s'.format(c,a,b,dur),end='')
+
                 if self.count %10 == 0:
                     print('\nHave crawled %d twitter' %self.count)
                     
@@ -65,14 +68,10 @@ class StreamListener(threading.Thread, tweepy.Stream):
                 self.count+=1
 
                 # if self.count == 10:
-                # self.disconnect()
+                #     self.disconnect()
 
-        # ignore the tweets without 'place' attribute
         except KeyError as e:
-            # print("\n")
-            # print("This tweet does not have the 'place' attibutes thus be ignored")
-            # print(data)
-            # print("\n")
+            # escapse the escapse
             return True
 
         except BaseException as e:
