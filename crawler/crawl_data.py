@@ -11,14 +11,14 @@ def set_configuration():
     Set the configuration for crawlers
     '''
     # get the key words for each crawler to search
-    keywords_file = '/Users/aa/Desktop/CCC/project2/COMP90024_Ass2/crawler/search_keywords.json'
+    keywords_file = '/home/ubuntu/COMP90024_Ass2/crawler/search_keywords.json'
     # read the json with key words
     keywords = []
     with io.open(keywords_file,'r') as f:
         keywords = json.load(f)
 
     # get the configuration of crawler
-    config_file = '/Users/aa/Desktop/CCC/project2/COMP90024_Ass2/crawler/crawler_config.ini'
+    config_file = '/home/ubuntu/COMP90024_Ass2/crawler/crawler_config.ini'
     # read the configuration
     try:
         # read the configuration file
