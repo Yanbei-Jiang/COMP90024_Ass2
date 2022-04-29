@@ -119,10 +119,11 @@ def get_data_from_db(db_name):
         print(db_name[id])
 
 
-def empty_spec_db(couch, db_name):
+def empty_spec_db(db_name):
     '''
     Delete all data in the specific database
     @param db: the couchdb
     @param db_name: the specific database be deleted
     '''
+    global couch
     couch.delete(db_name)
