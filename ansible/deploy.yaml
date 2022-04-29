@@ -1,25 +1,32 @@
 ---
-- hosts: git pull
-  roles:
-    - role: git-pull
+# - hosts: all
+#   vars_files:
+#     - host_vars/nectar.yaml
+#   vars:
+#     - ansible_user: ubuntu
+#     - ansible_ssh_private_key_file: "{{ ssh_private_key_path }}"
+#     - ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
+#   roles:
+#     - role: git-pull
 
-- hosts: CouchDB*
-  vars_files:
-    - host_vars/nectar.yaml
-  gather_facts: true
-  roles:
-    - role: couchdb-setup
+
+# - hosts: CouchDB*
+#   vars_files:
+#     - host_vars/nectar.yaml
+#   vars:
+#     - ansible_user: ubuntu
+#     - ansible_ssh_private_key_file: "{{ ssh_private_key_path }}"
+#     - ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
+#   roles:
+#     - role: couchdb-setup
 
 - hosts: CouchDBMaster
   vars_files:
     - host_vars/nectar.yaml
-  gather_facts: true
+  vars:
+    - ansible_user: ubuntu
+    - ansible_ssh_private_key_file: "{{ ssh_private_key_path }}"
+    - ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
   roles:
-    - role: couchdb-cluster-setup
-
-- hosts: crawler
-  gather_facts: true
-  vars_files:
-    - host_vars/nectar.yaml
-  roles:
+    #- role: couchdb-cluster-setup
     - role: crawler-setup

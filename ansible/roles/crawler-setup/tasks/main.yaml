@@ -4,7 +4,7 @@
     yes
   template:
     src: db_info.ini.j2
-    dest: '/home/ubuntu/comp90024_Ass2/crawler/db_info.ini'
+    dest: '/home/ubuntu/COMP90024_Ass2/crawler/db_info.ini'
 
 
 - name: Stop server

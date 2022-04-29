@@ -22,11 +22,11 @@
     user: "{{ couchdb_user }}"
     password: "{{ couchdb_password }}"
     force_basic_auth: yes
-    status_code: 200, 201
+    status_code: 200, 201, 409
     headers:
       Content-Type: "application/json"
     body_format: json
-    body: "{\"action\":\"add_node\",\"host\":\"{{ inventory_hostname }}\",\"port\":\"5984\",\"username\":\"{{ couchdb_user }}\",\"password\":\"{{ couchdb_password }}\"}"
+    body: "{\"action\":\"add_node\",\"host\":\"{{ inventory_hostname }}\",\"port\":\"5984\",\"username\":\"{{ couchdb_user }}\",\"password\":\"{{ couchdb_password }}\"}"
 
 #  ignore error 
 - name: ignore error 
