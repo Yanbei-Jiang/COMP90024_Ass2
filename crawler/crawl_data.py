@@ -79,5 +79,5 @@ initialize_db()
 
 # empty the db
 db_load_data.empty_spec_db('original_tweets')
-db_load_data.empty_spec_db('processed_tweetws')
+db_load_data.empty_spec_db('processed_tweets')
 
