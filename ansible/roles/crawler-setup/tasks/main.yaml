@@ -7,12 +7,12 @@
     dest: '/home/ubuntu/COMP90024_Ass2/crawler/db_info.ini'
 
 
-- name: Stop server
-  become:
-    yes
-  shell: docker-compose down --rmi local
-  args:
-    chdir: /home/ubuntu/COMP90024_Ass2/crawler
+# - name: Stop server
+#   become:
+#     yes
+#   shell: docker-compose down --rmi local
+#   args:
+#     chdir: /home/ubuntu/COMP90024_Ass2/crawler
 
 
 - name: Start server
