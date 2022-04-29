@@ -1,13 +1,13 @@
 ---
-# - hosts: all
-#   vars_files:
-#     - host_vars/nectar.yaml
-#   vars:
-#     - ansible_user: ubuntu
-#     - ansible_ssh_private_key_file: "{{ ssh_private_key_path }}"
-#     - ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
-#   roles:
-#     - role: git-pull
+- hosts: all
+  vars_files:
+    - host_vars/nectar.yaml
+  vars:
+    - ansible_user: ubuntu
+    - ansible_ssh_private_key_file: "{{ ssh_private_key_path }}"
+    - ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
+  roles:
+    - role: git-pull
 
 
 # - hosts: CouchDB*
@@ -20,13 +20,13 @@
 #   roles:
 #     - role: couchdb-setup
 
-- hosts: CouchDBMaster
-  vars_files:
-    - host_vars/nectar.yaml
-  vars:
-    - ansible_user: ubuntu
-    - ansible_ssh_private_key_file: "{{ ssh_private_key_path }}"
-    - ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
-  roles:
-    #- role: couchdb-cluster-setup
-    - role: crawler-setup
+# - hosts: CouchDBMaster
+#   vars_files:
+#     - host_vars/nectar.yaml
+#   vars:
+#     - ansible_user: ubuntu
+#     - ansible_ssh_private_key_file: "{{ ssh_private_key_path }}"
+#     - ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
+#   roles:
+#     - role: couchdb-cluster-setup
+#     - role: crawler-setup
