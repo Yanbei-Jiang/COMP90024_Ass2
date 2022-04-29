@@ -73,5 +73,11 @@ def initialize_db():
 
 # initialize the db
 initialize_db()
+
 # start the crawlers
-start_crawlers()
+#start_crawlers()
+
+# empty the db
+db_load_data.empty_spec_db('original_tweets')
+db_load_data.empty_spec_db('processed_tweetws')
+
