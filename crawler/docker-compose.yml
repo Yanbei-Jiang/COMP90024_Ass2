@@ -3,4 +3,4 @@ services:
   crawler:
       build: .
       volumes:
-        - /data/docker:/data/crawler
+        - .:/usr/src/app
