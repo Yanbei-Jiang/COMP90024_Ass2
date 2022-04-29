@@ -71,5 +71,7 @@ def initialize_db():
     db_load_data.initialize_couchdb()
 
 
+# initialize the db
 initialize_db()
+# start the crawlers
 start_crawlers()
