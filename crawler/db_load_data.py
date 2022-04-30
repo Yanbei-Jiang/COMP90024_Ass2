@@ -5,7 +5,7 @@ import couchdb
 import json
 
 # global variables
-db_info_ini_file = "db_info.ini"
+db_info_ini_file = "db_config.ini"
 
 username = ""
 password = ""
@@ -66,7 +66,7 @@ def initialize_couchdb():
     '''
     Initialize the couchdb
     '''
-    print("--------------Initialize the database--------------")
+    print("Initialize the database")
     global username
     global password
     global host
@@ -89,7 +89,7 @@ def initialize_couchdb():
     # generate the two database
     get_spec_db(old_db_name, couch)
     get_spec_db(new_db_name, couch)
-    print("Initialize the database Successfully")
+    print("Initialize the database Successfully.\n")
 
 
 def store_to_backup_db(data):

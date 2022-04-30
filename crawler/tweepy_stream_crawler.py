@@ -27,15 +27,18 @@ class StreamListener(threading.Thread, tweepy.Stream):
 
     # Override Tweepy.Stream
     def on_data(self, data):
+        print("1")
         try:
             # read the data
             data_raw = json.loads(data)
             place = data_raw['place']
             json_data = {data_raw['id']:data_raw}
             if  place != None:
-
                 # store data to db
                 db_load_data.store_to_backup_db(data_raw)
+                # count the number
+                self.count+=1
+                print('\r' + self.thread_name + ' get ' + str(self.count) + ' tweets now.')
 
                 # store to file
                 # if os.path.isfile(self.file_name):
@@ -47,25 +50,23 @@ class StreamListener(threading.Thread, tweepy.Stream):
                 # else:
                 #     with io.open(self.file_name,'w') as f:
                 #         json.dump(json_data,f,indent = 2)
-
                 # show the processing
-                i = self.count%10
-                a = '*' * i
-                b = '.' * (10-i)
-                c = (i/10)*100
-                dur = time.perf_counter()-self.start_time
-                if (self.thread_name == "Thread_0"):
-                    print('\n'+self.thread_name + ': {:^3.0f}%[{}->{}]{:.2f}s'.format(c,a,b,dur),end='')
-                elif (self.thread_name == "Thread_1"):
-                    print('\n'+self.thread_name + ': {:^3.0f}%[{}->{}]{:.2f}s'.format(c,a,b,dur),end='')
-                else:
-                    print('\n'+self.thread_name + ': {:^3.0f}%[{}->{}]{:.2f}s'.format(c,a,b,dur),end='')
+                # i = self.count%10
+                # a = '*' * i
+                # b = '.' * (10-i)
+                # c = (i/10)*100
+                # dur = time.perf_counter()-self.start_time
+                # if (self.thread_name == "Thread_0"):
+                #     print('\n'+self.thread_name + ': {:^3.0f}%[{}->{}]{:.2f}s'.format(c,a,b,dur),end='')
+                # elif (self.thread_name == "Thread_1"):
+                #     print('\n'+self.thread_name + ': {:^3.0f}%[{}->{}]{:.2f}s'.format(c,a,b,dur),end='')
+                # else:
+                #     print('\n'+self.thread_name + ': {:^3.0f}%[{}->{}]{:.2f}s'.format(c,a,b,dur),end='')
 
-                if self.count %10 == 0:
-                    print('\nHave crawled %d twitter' %self.count)
-                    
+                # if self.count %10 == 0:
+                #     print('\nHave crawled %d twitter' %self.count)
+                
                 # print(self.count)
-                self.count+=1
 
                 # if self.count == 10:
                 #     self.disconnect()
@@ -75,28 +76,26 @@ class StreamListener(threading.Thread, tweepy.Stream):
             return True
 
         except BaseException as e:
-            print("Exception made. Data printed below")
+            print("----------Exception made. Data printed below----------")
             print(data)
             print(e)
+            print("------------------------------------------------------\n")
 
         return True
 
 
     # Override Stream
     def on_error(self, status_code):
-        print(status_code)
 
         if status_code == 420:
-            print('Too many requests! Please wait')
-            self.disconnect()
-            time.sleep(20)
+            self.wait()
+            print(self.thread_name + ' suspends because of 420.')
         if status_code == 429:
-            print("Too many requests! Please wait")
-            self.disconnect()
-            time.sleep(15*60 + 1)
+            self.wait()
+            print(self.thread_name + ' suspends because of 429.')
         else:
-            print("unexpected error. See error code above. Retry in 10s")
-            time.sleep(10)
+            self.wait()
+            print('Unknown error during calling Tweet API')
 
 
     # Override Thread

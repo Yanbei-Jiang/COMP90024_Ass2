@@ -2,7 +2,8 @@ import threading
 import configparser
 import io
 import json
-
+import datetime
+import schedule
 import tweepy_stream_crawler
 import db_load_data
 
@@ -37,15 +38,31 @@ def set_configuration():
             globals()['listener_'+i] = tweepy_stream_crawler.StreamListener(
                 api_key, api_key_secret, access_token, access_token_secret, 
                 (keywords[list(keywords.keys())[curr_key_words]]), "Thread_"+str(curr_key_words))
-
+            
             # move to the next key words should be searched
             curr_key_words +=1
+        print("Initialize the Crawlers Successfully.\n")
 
     except KeyError:
         print('\nMissing the key of Api or Access, please check the file')
         exit(1)
-    
-    print("Initialize the Crawlers Successfully.")
+
+
+def restart_crawlers():
+    '''
+    Restart all crawler threads
+    '''
+    # wait all threads to avoid repetitive start
+    listener_account_1.wait()
+    # listener_account_2.wait()
+    # listener_account_3.wait()
+
+    # restart
+    print("--------------Restart Crawlers--------------")
+    listener_account_1.start()
+    # listener_account_2.start()
+    # listener_account_3.start()
+    print("Restart Three Crawlers Successfully")
 
 
 def start_crawlers():
@@ -53,15 +70,23 @@ def start_crawlers():
     Start the crawlers to manipulate the data
     '''
     # initialize the crawlers
-    print("--------------Initialize the Crawlers--------------")
+    print("Initialize the Crawlers")
     set_configuration()
 
-    # start crawlers
-    print("--------------Start Crawlers--------------")
+    # start the crawlers
+    print("Start Crawlers")
     listener_account_1.start()
-    listener_account_2.start()
-    listener_account_3.start()
-    print("Start Three Crawlers Successfully")
+    # listener_account_2.start()
+    # listener_account_3.start()
+    print("Start Three Crawlers Successfully\n")
+    
+    # assign the work to re-start all thread each 15 minutes
+    #schedule.every(15).minutes.do(restart_crawlers)
+
+    # while (True):
+    #     schedule.run_pending()
+        
+    
 
 
 def initialize_db():
@@ -75,7 +100,7 @@ def initialize_db():
 initialize_db()
 
 # start the crawlers
-# start_crawlers()
+start_crawlers()
 
 # empty the db
 #db_load_data.empty_spec_db('original_tweets')
