@@ -1,19 +1,19 @@
 {
-    "keywords_1":
-    {"languages" :["en"], 
-        "track":["rent", "buy house", "house", "house price", "apartment"],  
-        "locations":[112.28, -44.36, 155.23, -10.37]
+    "Melbourne_city":
+    {"languages" :"en", 
+        "track":"restaurant OR cuisine OR education OR student OR university OR graduation OR school OR tuition OR rent OR house OR apartment",  
+        "locations":"-37.8151,144.9666,40km"
     },
 
-    "keywords_2":
-    {"languages" :["en"], 
-    "track":["education", "student", "oversea students", "graduation", "high school", "tuition"],  
-    "locations":[112.28, -44.36, 155.23, -10.37]
+    "Sydney":
+    {"languages" :"en", 
+    "track":"restaurant OR cuisine OR education OR student OR university OR graduation OR school OR tuition OR rent OR house OR apartment",  
+    "locations":"-33.8688,151.2093,40km"
     },
 
-    "keywords_3":
-    {"languages" :["en"], 
-    "track":["local restaurant", "local cuisine"], 
-    "locations":[112.28, -44.36, 155.23, -10.37]
+    "Adelaide":
+    {"languages" :"en", 
+    "track":"restaurant OR cuisine OR education OR student OR university OR graduation OR school OR tuition OR rent OR house OR apartment", 
+    "locations":"-34.9285,138.6007,40km"
     }
 }
