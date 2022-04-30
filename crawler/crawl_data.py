@@ -86,8 +86,6 @@ def start_crawlers():
     # while (True):
     #     schedule.run_pending()
         
-    
-
 
 def initialize_db():
     '''

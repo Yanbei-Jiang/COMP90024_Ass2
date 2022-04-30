@@ -27,7 +27,6 @@ class StreamListener(threading.Thread, tweepy.Stream):
 
     # Override Tweepy.Stream
     def on_data(self, data):
-        print("1")
         try:
             # read the data
             data_raw = json.loads(data)
@@ -86,11 +85,11 @@ class StreamListener(threading.Thread, tweepy.Stream):
 
     # Override Stream
     def on_error(self, status_code):
-
+        
         if status_code == 420:
             self.wait()
             print(self.thread_name + ' suspends because of 420.')
-        if status_code == 429:
+        elif status_code == 429:
             self.wait()
             print(self.thread_name + ' suspends because of 429.')
         else:
