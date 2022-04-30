@@ -2,7 +2,8 @@ import threading
 import configparser
 import io
 import json
-import datetime
+import datetime as dt
+
 import schedule
 import tweepy_stream_crawler
 import db_load_data
@@ -101,7 +102,7 @@ initialize_db()
 
 # start the crawlers
 start_crawlers()
-
+schedule.every().day.at("01:00").do(start_crawlers)
 # empty the db
 #db_load_data.empty_spec_db('original_tweets')
 #db_load_data.empty_spec_db('processed_tweets')

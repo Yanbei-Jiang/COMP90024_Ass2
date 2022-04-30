@@ -7,6 +7,7 @@ import threading
 import configparser
 import os.path
 import db_load_data
+import datetime
 
 class StreamListener(threading.Thread, tweepy.Cursor):
 
@@ -18,12 +19,11 @@ class StreamListener(threading.Thread, tweepy.Cursor):
  
 
     # initialize
-    def __init__(self, api_key, api_key_secret, access_token, access_token_secret, keywords,key_val, datetime_until,thread_name):
+    def __init__(self, api_key, api_key_secret, access_token, access_token_secret, keywords,datetime_until,key_val,thread_name):
         threading.Thread.__init__(self)
         auth = tweepy.OAuthHandler(api_key, api_key_secret)
         auth.set_access_token(access_token, access_token_secret)
         api = tweepy.API(auth,wait_on_rate_limit=True)
-        # print(keywords['track'])
         tweepy.Cursor.__init__(self, api.search_tweets, q=keywords['track'], geocode=keywords['locations'],lang = keywords['languages'], count=100, until = datetime_until, tweet_mode='extended')
         self.key_val = key_val
         self.thread_name = thread_name

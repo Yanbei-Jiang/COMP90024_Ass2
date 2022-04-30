@@ -7,6 +7,7 @@ import threading
 import configparser
 import os.path
 import db_load_data
+import datetime
 
 class StreamListener(threading.Thread, tweepy.Stream):
 
@@ -28,6 +29,14 @@ class StreamListener(threading.Thread, tweepy.Stream):
 
     # Override Tweepy.Stream
     def on_data(self, data):
+        now_time = datetime.datetime.now().now().strftime('%H:%M')
+        if now_time == "00:00":
+            self.disconnect()
+        dur_for_sleep = time.perf_counter() - self.start_time
+        if dur_for_sleep>14*60:
+            print('\nHave runned %d second' %dur_for_sleep)
+            print('I have to sleep')
+            time.sleep(15*60)
         try:
             # read the data
             data_raw = json.loads(data)
@@ -81,7 +90,7 @@ class StreamListener(threading.Thread, tweepy.Stream):
             print(data)
             print(e)
             print("------------------------------------------------------\n")
-
+        time.sleep(1)
         return True
 
 

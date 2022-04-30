@@ -3,6 +3,7 @@ import configparser
 import io
 import json
 import datetime
+import datetime as dt
 import schedule
 import tweepy_search_crawler
 import db_load_data
@@ -40,7 +41,7 @@ def set_configuration():
             access_token = config[i]['access_token']
             access_token_secret = config[i]['access_token_secret']
             datetime_until  = (datetime.datetime.now().astimezone(utc) - datetime.timedelta(days = 6)).strftime("%Y-%m-%d")
-            globals()['listener_'+i] = tweepy_stream_crawler.StreamListener(
+            globals()['listener_'+i] = tweepy_search_crawler.StreamListener(
                                                                             api_key, api_key_secret, access_token, access_token_secret, 
                                                                             (keywords[list(keywords.keys())[curr_key_words]]),
                                                                             (list(keywords.keys())[curr_key_words]),
