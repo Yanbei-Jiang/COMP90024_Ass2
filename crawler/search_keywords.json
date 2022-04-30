@@ -1,0 +1,19 @@
+{
+    "keywords_1":
+    {"languages" :["en"], 
+        "track":["rent", "buy house", "house", "house price", "apartment"],  
+        "locations":[112.28, -44.36, 155.23, -10.37]
+    },
+
+    "keywords_2":
+    {"languages" :["en"], 
+    "track":["education", "student", "oversea students"],  
+    "locations":[112.28, -44.36, 155.23, -10.37]
+    },
+
+    "keywords_3":
+    {"languages" :["en"], 
+    "track":["graduation", "high school", "tuition"], 
+    "locations":[112.28, -44.36, 155.23, -10.37]
+    }
+}
