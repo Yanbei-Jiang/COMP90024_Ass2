@@ -11,14 +11,14 @@ def set_configuration():
     Set the configuration for crawlers
     '''
     # get the key words for each crawler to search
-    keywords_file = './search_keywords.json'
+    keywords_file = 'search_keywords.json'
     # read the json with key words
     keywords = []
     with io.open(keywords_file,'r') as f:
         keywords = json.load(f)
 
     # get the configuration of crawler
-    config_file = './crawler_config.ini'
+    config_file = 'crawler_config.ini'
     # read the configuration
     try:
         # read the configuration file
@@ -75,7 +75,7 @@ def initialize_db():
 initialize_db()
 
 # start the crawlers
-start_crawlers()
+# start_crawlers()
 
 # empty the db
 #db_load_data.empty_spec_db('original_tweets')
