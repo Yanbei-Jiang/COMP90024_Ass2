@@ -179,12 +179,24 @@ def initialize_db():
     db_load_data.initialize_couchdb()
 
 
+def test():
+    print("Hello")
+
+
 # initialize the db
 initialize_db()
-schedule.every().day.at("00:01").do(start_crawlers)
-# start the crawlers
+# db_load_data.store_to_backup_db(keywords)
+
+# start crawlers
 start_crawlers_stream()
+
+# daily search
+schedule.every().day.at("00:01").do(start_crawlers)
+# daily stream
 schedule.every().day.at("01:00").do(start_crawlers_stream)
+while(True):
+    schedule.run_pending()
+
 # empty the db
 #db_load_data.empty_spec_db('original_tweets')
 #db_load_data.empty_spec_db('processed_tweets')

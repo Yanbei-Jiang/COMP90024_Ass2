@@ -29,8 +29,8 @@ class StreamListener(threading.Thread, tweepy.Stream):
 
     # Override Tweepy.Stream
     def on_data(self, data):
-        now_time = datetime.datetime.now().now().strftime('%H:%M')
-        if now_time == "00:00":
+        now_time = int(datetime.datetime.now().now().strftime('%H%M'))
+        if now_time > 0 and now_time < 2:
             self.disconnect()
         dur_for_sleep = time.perf_counter() - self.start_time
         if dur_for_sleep>14*60:

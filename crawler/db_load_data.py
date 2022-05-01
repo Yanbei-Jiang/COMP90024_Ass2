@@ -71,7 +71,7 @@ def initialize_couchdb():
     global password
     global host
     global port
-    global odl_db_name
+    global old_db_name
     global new_db_name
     global couch
     
@@ -99,6 +99,7 @@ def store_to_backup_db(data):
     '''
     global old_db_name
     global couch
+    print(old_db_name)
     get_spec_db(old_db_name, couch).save(data)
 
 
