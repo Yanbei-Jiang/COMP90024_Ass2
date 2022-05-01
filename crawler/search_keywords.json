@@ -2,18 +2,18 @@
     "Melbourne_city":
     {"languages" :"en", 
         "track":"restaurant OR cuisine OR education OR student OR university OR graduation OR school OR tuition OR rent OR house OR apartment",  
-        "locations":"-37.8151,144.9666,40km"
+        "locations":"-37.815041,144.964979,5km"
     },
 
-    "Sydney":
+    "glen_east_melbourne":
     {"languages" :"en", 
     "track":"restaurant OR cuisine OR education OR student OR university OR graduation OR school OR tuition OR rent OR house OR apartment",  
-    "locations":"-33.8688,151.2093,40km"
+    "locations":"-37.87439,145.16680,17km"
     },
 
-    "Adelaide":
+    "Balliang_west_melbourne":
     {"languages" :"en", 
     "track":"restaurant OR cuisine OR education OR student OR university OR graduation OR school OR tuition OR rent OR house OR apartment", 
-    "locations":"-34.9285,138.6007,40km"
+    "locations":"-37.846392,144.369279,45km"
     }
 }

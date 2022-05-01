@@ -45,7 +45,7 @@ class StreamListener(threading.Thread, tweepy.Stream):
             json_data = {data_label:data_raw}
             if  place != None:
                 # store data to db
-                db_load_data.store_to_backup_db(data_raw)
+                db_load_data.store_to_backup_db(json_data)
                 # count the number
                 self.count+=1
                 print('\r' + self.thread_name + ' get ' + str(self.count) + ' tweets now.')
@@ -90,7 +90,7 @@ class StreamListener(threading.Thread, tweepy.Stream):
             print(data)
             print(e)
             print("------------------------------------------------------\n")
-        time.sleep(1)
+        # time.sleep(0.5)
         return True
 
 
