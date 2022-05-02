@@ -32,11 +32,11 @@ class StreamListener(threading.Thread, tweepy.Stream):
         now_time = int(datetime.datetime.now().now().strftime('%H%M'))
         if now_time > 0 and now_time < 2:
             self.disconnect()
-        dur_for_sleep = time.perf_counter() - self.start_time
-        if dur_for_sleep>14*60:
-            print('\nHave runned %d second' %dur_for_sleep)
-            print('I have to sleep')
-            time.sleep(15*60)
+        # dur_for_sleep = time.perf_counter() - self.start_time
+        # if dur_for_sleep>14*60:
+        #     print('\nHave runned %d second' %dur_for_sleep)
+        #     print('I have to sleep')
+        #     time.sleep(15*60)
         try:
             # read the data
             data_raw = json.loads(data)
