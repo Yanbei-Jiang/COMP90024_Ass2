@@ -191,9 +191,9 @@ initialize_db()
 start_crawlers_stream()
 
 # daily search
-schedule.every().day.at("00:01").do(start_crawlers)
+schedule.every().day.at("14:01").do(start_crawlers)
 # daily stream
-schedule.every().day.at("01:00").do(start_crawlers_stream)
+schedule.every().day.at("15:00").do(start_crawlers_stream)
 while(True):
     schedule.run_pending()
 
