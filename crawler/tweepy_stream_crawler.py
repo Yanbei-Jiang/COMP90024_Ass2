@@ -48,7 +48,7 @@ class StreamListener(threading.Thread, tweepy.Stream):
                 db_load_data.store_to_backup_db(json_data)
                 # count the number
                 self.count+=1
-                print('\r' + self.thread_name + ' get ' + str(self.count) + ' tweets now.')
+                print('\r' + self.thread_name + ' get ' + str(self.count) + ' tweets by stream now.')
                 # print(data_label)
                 # store to file
                 # if os.path.isfile(self.file_name):

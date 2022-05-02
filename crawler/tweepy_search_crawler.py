@@ -49,7 +49,7 @@ class StreamListener(threading.Thread, tweepy.Cursor):
                     # print(self.key_val)
                     # count the number
                     self.count+=1
-                    print('\r' + self.thread_name + ' get ' + str(self.count) + ' tweets now.')
+                    print('\r' + self.thread_name + ' get ' + str(self.count) + ' tweets by search now.')
 
             except KeyError as e:
                 # escapse the escapse
