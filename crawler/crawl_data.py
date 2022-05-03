@@ -45,8 +45,8 @@ def set_configuration():
             globals()['listener_'+i] = tweepy_search_crawler.StreamListener(
                                                                             api_key, api_key_secret, access_token, access_token_secret, 
                                                                             (keywords[list(keywords.keys())[curr_key_words]]),
-                                                                            (list(keywords.keys())[curr_key_words]),
                                                                             datetime_until,
+                                                                            (list(keywords.keys())[curr_key_words]),
                                                                             "Thread_"+str(curr_key_words))
             # move to the next key words should be searched
             curr_key_words+=1
