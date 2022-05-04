@@ -24,7 +24,7 @@ class StreamListener(threading.Thread, tweepy.Cursor):
         auth = tweepy.OAuthHandler(api_key, api_key_secret)
         auth.set_access_token(access_token, access_token_secret)
         api = tweepy.API(auth,wait_on_rate_limit=True)
-        tweepy.Cursor.__init__(self, api.search_tweets, q=keywords['track'], geocode=keywords['locations'],lang = keywords['languages'], count=100, until = datetime_until, tweet_mode='extended')
+        tweepy.Cursor.__init__(self, api.search_tweets, q=keywords['track'], geocode=keywords['locations'],lang = keywords['languages'], count=1000, until = datetime_until, tweet_mode='extended')
         self.key_val = key_val
         self.thread_name = thread_name
 
@@ -33,7 +33,7 @@ class StreamListener(threading.Thread, tweepy.Cursor):
     # Override Thread
     def run(self):
 
-        dataset = self.items(10000)
+        dataset = self.items(100000)
         
         for data in dataset:
             try:
