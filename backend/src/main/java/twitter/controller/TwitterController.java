@@ -1,12 +1,15 @@
 package twitter.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.*;
+import java.util.List;
 import java.util.Properties;
-import java.net.URL;
+import com.alibaba.fastjson.JSONObject;
 
 @RestController
 public class TwitterController {
@@ -36,7 +39,6 @@ public class TwitterController {
             port = (String)properties.get("port");
             oldDBName = (String)properties.get("old_db_name");
             newDBName = (String)properties.get("new_db_name");
-            System.out.println(port);
         } catch (IOException e){
             System.out.println("DB Configuration does not exist");
         }
@@ -46,13 +48,19 @@ public class TwitterController {
      * Get the dataset from the couchdb
      */
     @Async
-    @RequestMapping("/twitter/get_processed_data")
-    public String getProcessedData(){
+    @RequestMapping("/twitter/get_data")
+    public List<JSONObject> getData(){
         // generate the request
-        String[] cmds = {"curl", "-X", "GET",  "http://user:pass@127.0.0.1:5984/demo"};
-        // send request to couchdb
+        String url = "http://" + username + ":" + password + "@" + node0 + ":" + port + "/" + newDBName + "/_all_docs";
+        String[] cmds = {"curl", "-X", "GET", url};
+        // send request to couchdb and get the response
+        String resp = execCurl(cmds);
+        // transfer response from String to Json
+        JSONObject respJson = JSON.parseObject(resp);
+        // get the data
+        List<JSONObject> rows = JSONArray.parseArray(JSON.toJSONString(respJson.get("rows")), JSONObject.class);
 
-        return execCurl(cmds);
+        return rows;
     }
 
     /**
@@ -60,7 +68,7 @@ public class TwitterController {
      * @param cmds the curl request
      * @return response from server
      */
-    public static String execCurl(String[] cmds) {
+    private static String execCurl(String[] cmds) {
         ProcessBuilder process = new ProcessBuilder(cmds);
         Process p;
         try {
