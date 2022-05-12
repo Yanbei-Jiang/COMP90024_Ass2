@@ -31,6 +31,7 @@ class StreamListener(threading.Thread, tweepy.Stream):
     def on_data(self, data):
         now_time = int(datetime.datetime.now().now().strftime('%H%M'))
         if now_time > 1600 and now_time < 1602:
+            print("Disconnect one Stream Crawler.\n")
             self.disconnect()
         # dur_for_sleep = time.perf_counter() - self.start_time
         # if dur_for_sleep>14*60:

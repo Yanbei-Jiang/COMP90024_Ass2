@@ -1,14 +1,11 @@
-import threading
 import configparser
 import io
 import json
 import datetime
-import datetime as dt
 import schedule
 import tweepy_search_crawler
 import tweepy_stream_crawler
 import db_load_data
-import time
 from pytz import utc
 
 
@@ -17,7 +14,7 @@ def set_configuration():
     Set the configuration for crawlers
     '''
     # get the key words for each crawler to search
-    keywords_file = 'search_keywords.json'
+    keywords_file = 'search_keywords_search.json'
     # read the json with key words
     keywords = []
     with io.open(keywords_file,'r') as f:
@@ -42,7 +39,7 @@ def set_configuration():
             access_token = config[i]['access_token']
             access_token_secret = config[i]['access_token_secret']
             datetime_until  = (datetime.datetime.now().astimezone(utc) - datetime.timedelta(days = 6)).strftime("%Y-%m-%d")
-            globals()['listener_'+i] = tweepy_search_crawler.StreamListener(
+            globals()['listener_search_'+i] = tweepy_search_crawler.StreamListener(
                                                                             api_key, api_key_secret, access_token, access_token_secret, 
                                                                             (keywords[list(keywords.keys())[curr_key_words]]),
                                                                             datetime_until,
@@ -58,22 +55,20 @@ def set_configuration():
 
 
 
-
-
-def start_crawlers():
+def start_crawlers_search():
     '''
-    Start the crawlers to manipulate the data
+    Start the crawlers to manipulate the data through search
     '''
     # initialize the crawlers
-    print("Initialize the Crawlers")
+    print("Initialize the Search Crawlers")
     set_configuration()
 
     # start the crawlers
-    print("Start Crawlers")
-    listener_account_1.start()
-    listener_account_2.start()
-    listener_account_3.start()
-    print("Start Three Crawlers Successfully\n")
+    print("Start Search Crawlers")
+    listener_search_account_1.start()
+    listener_search_account_2.start()
+    listener_search_account_3.start()
+    print("Start Three Search Crawlers Successfully\n")
     
     # assign the work to re-start all thread each 15 minutes
     #schedule.every(15).minutes.do(restart_crawlers)
@@ -126,36 +121,36 @@ def set_configuration_stream():
             
             # move to the next key words should be searched
             curr_key_words +=1
-        print("Initialize the Crawlers Successfully.\n")
+        print("Initialize the Stream Crawlers Successfully.\n")
 
     except KeyError:
         print('\nMissing the key of Api or Access, please check the file')
         exit(1)
 
 
-def restart_crawlers():
-    '''
-    Restart all crawler threads
-    '''
-    # wait all threads to avoid repetitive start
-    listener_stream_account_1.wait()
-    listener_stream_account_2.wait()
-    listener_stream_account_3.wait()
+# def restart_crawlers_stream():
+#     '''
+#     Restart all crawler threads
+#     '''
+#     # wait all threads to avoid repetitive start
+#     listener_stream_account_1.wait()
+#     listener_stream_account_2.wait()
+#     listener_stream_account_3.wait()
 
-    # restart
-    print("--------------Restart Crawlers--------------")
-    listener_stream_account_1.start()
-    listener_stream_account_2.start()
-    listener_stream_account_3.start()
-    print("Restart Three Crawlers Successfully")
+#     # restart
+#     print("--------------Restart Crawlers--------------")
+#     listener_stream_account_1.start()
+#     listener_stream_account_2.start()
+#     listener_stream_account_3.start()
+#     print("Restart Three Crawlers Successfully")
 
 
 def start_crawlers_stream():
     '''
-    Start the crawlers to manipulate the data
+    Start the crawlers to manipulate the data through stream
     '''
     # initialize the crawlers
-    print("Initialize the Crawlers")
+    print("Initialize the Stream Crawlers")
     set_configuration_stream()
 
     # start the crawlers
@@ -163,7 +158,7 @@ def start_crawlers_stream():
     listener_stream_account_1.start()
     listener_stream_account_2.start()
     listener_stream_account_3.start()
-    print("Start Three Crawlers Successfully\n")
+    print("Start Three Stream Crawlers Successfully\n")
     
     # assign the work to re-start all thread each 15 minutes
     #schedule.every(15).minutes.do(restart_crawlers)
@@ -179,25 +174,18 @@ def initialize_db():
     db_load_data.initialize_couchdb()
 
 
-def test():
-    print("Hello")
 
 
 # initialize the db
 initialize_db()
-# db_load_data.store_to_backup_db(keywords)
 
 # start crawlers
 start_crawlers_stream()
 
 # daily search
-schedule.every().day.at("16:15").do(start_crawlers)
+schedule.every().day.at("16:15").do(start_crawlers_search)
 # daily stream
 schedule.every().day.at("17:00").do(start_crawlers_stream)
+# start the schedule
 while(True):
     schedule.run_pending()
-
-# empty the db
-#db_load_data.empty_spec_db('original_tweets')
-#db_load_data.empty_spec_db('processed_tweets')
-
