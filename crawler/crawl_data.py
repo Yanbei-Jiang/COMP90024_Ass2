@@ -176,20 +176,20 @@ def initialize_db():
 
 
 
-
+print("wow")
 # initialize the db
-initialize_db()
+# initialize_db()
 
 # start reading the old data
 # read_data.read_data_file("\data\twitter-melb.json")
 
-# start crawlers
-start_crawlers_stream()
+# # start crawlers
+# start_crawlers_stream()
 
-# daily search
-schedule.every().day.at("16:15").do(start_crawlers_search)
-# daily stream
-schedule.every().day.at("17:00").do(start_crawlers_stream)
-# start the schedule
-while(True):
-    schedule.run_pending()
+# # daily search
+# schedule.every().day.at("16:15").do(start_crawlers_search)
+# # daily stream
+# schedule.every().day.at("17:00").do(start_crawlers_stream)
+# # start the schedule
+# while(True):
+#     schedule.run_pending()
