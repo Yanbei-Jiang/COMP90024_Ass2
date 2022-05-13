@@ -177,6 +177,7 @@ def initialize_db():
 
 
 print("wow")
+sleep(600)
 # initialize the db
 # initialize_db()
 
