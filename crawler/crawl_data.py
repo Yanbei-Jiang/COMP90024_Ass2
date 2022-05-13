@@ -180,7 +180,7 @@ def initialize_db():
 initialize_db()
 
 #start reading the old data
-read_data.read_data_file("/data/twitter-melb.json")
+read_data.read_data_file("./twitter-melb.json")
 
 # start crawlers
 start_crawlers_stream()
