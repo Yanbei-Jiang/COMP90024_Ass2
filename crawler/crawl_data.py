@@ -6,6 +6,7 @@ import schedule
 import tweepy_search_crawler
 import tweepy_stream_crawler
 import db_load_data
+import read_data
 from pytz import utc
 
 
@@ -178,6 +179,9 @@ def initialize_db():
 
 # initialize the db
 initialize_db()
+
+# start reading the old data
+# read_data.read_data_file()
 
 # start crawlers
 start_crawlers_stream()

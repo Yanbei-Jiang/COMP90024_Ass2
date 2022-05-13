@@ -45,7 +45,7 @@ class StreamListener(threading.Thread, tweepy.Cursor):
                 # print(self.key_val)
                 if  place != None:
                     # store data to db
-                    db_load_data.store_to_backup_db(json_data)
+                    db_load_data.store_to_new_data_backup_db(json_data)
                     # print(self.key_val)
                     # count the number
                     self.count+=1

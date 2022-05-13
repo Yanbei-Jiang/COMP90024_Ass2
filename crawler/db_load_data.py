@@ -13,6 +13,7 @@ host = ""
 port = ""
 old_db_name = ""
 new_db_name = ""
+pro_db_name = ""
 couch = ""
 
 
@@ -24,10 +25,11 @@ def connect_couchdb(username, password, host, port):
     return couch
 
 
-def get_spec_db(db_name, couch):
+def get_spec_db(db_name):
     '''
     Get the specific database
     '''
+    global couch
     # get existed db
     try:
         return couch[db_name]
@@ -73,6 +75,7 @@ def initialize_couchdb():
     global port
     global old_db_name
     global new_db_name
+    global pro_db_name
     global couch
     
     # set up info
@@ -83,24 +86,43 @@ def initialize_couchdb():
     port = db_info['port']
     old_db_name = db_info['old_db_name']
     new_db_name = db_info['new_db_name']
+    pro_db_name = db_info['pro_db_name']
 
     # connect the database
     couch = connect_couchdb(username, password, host, port)
     # generate the two database
-    get_spec_db(old_db_name, couch)
-    get_spec_db(new_db_name, couch)
+    get_spec_db(old_db_name)
+    get_spec_db(new_db_name)
+    get_spec_db(pro_db_name)
     print("Initialize the database Successfully.\n")
 
 
-def store_to_backup_db(data):
+def store_to_old_data_backup_db(data):
     '''
-    Accept data and store into backup database
+    Accept data and store into backup database which stored old data
     @param data be stored
     '''
     global old_db_name
     global couch
-    print(old_db_name)
-    get_spec_db(old_db_name, couch).save(data)
+
+    # duplication check
+    duplicateId = get_spec_db(old_db_name).find({"selector" : {"id" : data["id"]}})
+    if (len(list(duplicateId)) == 0):
+        get_spec_db(old_db_name).save(data)
+
+
+def store_to_new_data_backup_db(data):
+    '''
+    Accept data and store into backup database which stored new data
+    @param data be stored
+    '''
+    global new_db_name
+    global couch
+
+    # duplication check
+    duplicateId = get_spec_db(new_db_name).find({"selector" : {"id" : data["id"]}})
+    if (len(list(duplicateId)) == 0):
+        get_spec_db(new_db_name).save(data)
 
 
 def store_to_processed_db(data):
@@ -108,9 +130,13 @@ def store_to_processed_db(data):
     Accept data and store into processed databse
     @param data be stored
     '''
-    global new_db_name
+    global pro_db_name
     global couch
-    get_spec_db(new_db_name, couch).save(data)
+
+    # duplication check
+    duplicateId = get_spec_db(pro_db_name).find({"selector" : {"id" : data["id"]}})
+    if (len(list(duplicateId)) == 0):
+        get_spec_db(pro_db_name).save(data)
     
 
 def get_data_from_db(db_name):
