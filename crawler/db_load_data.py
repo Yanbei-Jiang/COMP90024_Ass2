@@ -1,4 +1,5 @@
 import configparser
+from glob import glob
 from multiprocessing.spawn import old_main_modules
 import os
 import couchdb
@@ -14,6 +15,8 @@ port = ""
 old_db_name = ""
 new_db_name = ""
 pro_db_name = ""
+cache_db_name = ""
+cache_aurin = ""
 couch = ""
 
 
@@ -76,6 +79,8 @@ def initialize_couchdb():
     global old_db_name
     global new_db_name
     global pro_db_name
+    global cache_db_name
+    global aurin_db_name
     global couch
     
     # set up info
@@ -87,6 +92,8 @@ def initialize_couchdb():
     old_db_name = db_info['old_db_name']
     new_db_name = db_info['new_db_name']
     pro_db_name = db_info['pro_db_name']
+    cache_db_name = db_info['cache_db_name']
+    aurin_db_name = db_info['aurin_db_name']
 
     # connect the database
     couch = connect_couchdb(username, password, host, port)
@@ -94,6 +101,8 @@ def initialize_couchdb():
     get_spec_db(old_db_name)
     get_spec_db(new_db_name)
     get_spec_db(pro_db_name)
+    get_spec_db(cache_db_name)
+    get_spec_db(aurin_db_name)
     print("Initialize the database Successfully.\n")
 
 
@@ -120,10 +129,19 @@ def store_to_new_data_backup_db(data):
     global couch
 
     # duplication check
-    duplicateId = get_spec_db(new_db_name).find({"selector" : {"id" : data["id"]}})
+    duplicateId = get_spec_db(old_db_name).find({"selector" : {"id" : data["id"]}})
     if (len(list(duplicateId)) == 0):
         get_spec_db(new_db_name).save(data)
 
+def store_to_aurin_cache_db(data):
+    '''
+    Accept data and store into backup database which stored new data
+    @param data be stored
+    '''
+    global aurin_db_name
+    global couch
+
+    get_spec_db(new_db_name).save(data)
 
 def store_to_processed_db(data):
     '''
@@ -134,10 +152,22 @@ def store_to_processed_db(data):
     global couch
 
     # duplication check
-    duplicateId = get_spec_db(pro_db_name).find({"selector" : {"id" : data["id"]}})
+    duplicateId = get_spec_db(pro_db_name).find({"selector" : {"id": data["id"]}})
     if (len(list(duplicateId)) == 0):
         get_spec_db(pro_db_name).save(data)
     
+def store_to_cache_db(data):
+    '''
+    Accept data and store into processed databse
+    @param data be stored
+    '''
+    global cache_db_name
+    global couch
+
+    # duplication check
+ 
+
+    get_spec_db(cache_db_name).save(data)
 
 def get_data_from_db(db_name):
     '''

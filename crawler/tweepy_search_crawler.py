@@ -40,8 +40,8 @@ class StreamListener(threading.Thread, tweepy.Cursor):
                 # read the data
                 data_raw = data._json
                 place = data_raw['place']
-                data_label = self.key_val+'_'+str(data_raw['id'])+"_"+"search_data"
-                json_data = {data_label:data_raw}
+
+                json_data = {"id":data_raw['id'],"doc":data_raw}
                 # print(self.key_val)
                 if  place != None:
                     # store data to db
