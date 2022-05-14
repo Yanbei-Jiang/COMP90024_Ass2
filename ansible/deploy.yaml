@@ -29,4 +29,5 @@
     - ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
   roles:
     #- role: couchdb-cluster-setup
-    - role: crawler-setup
+    # - role: crawler-setup
+    - role: analysis-setup
