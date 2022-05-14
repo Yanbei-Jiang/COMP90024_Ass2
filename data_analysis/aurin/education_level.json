@@ -1,14 +1,8 @@
 {
-    "type": "FeatureCollection",
-    "bbox": [
-        140.961681996,
-        -39.159189528,
-        149.976290995,
-        -33.980425587
-    ],
+    
+    
     "features": [
         {
-            "type": "Feature",
             "properties": {
                 "f_advdip_and_dip_total": 60587,
                 "m_cert_lev_tot_total": 164071,
@@ -31,7 +25,6 @@
             "id": "gccsa_g46a_non_scl_qual_lvl_of_edu_by_age_by_sex_census_2016.fid-13603162_180bbf7858c_191e"
         },
         {
-            "type": "Feature",
             "properties": {
                 "f_advdip_and_dip_total": 194798,
                 "m_cert_lev_tot_total": 353062,
