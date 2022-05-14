@@ -42,8 +42,7 @@ class StreamListener(threading.Thread, tweepy.Stream):
             # read the data
             data_raw = json.loads(data)
             place = data_raw['place']
-            data_label = self.key_val+'_'+str(data_raw['id'])+"_"+"stream"
-            json_data = {data_label:data_raw}
+            json_data = {"id":data_raw['id'],"doc":data_raw}
             if  place != None:
                 # store data to db
                 db_load_data.store_to_new_data_backup_db(json_data)
