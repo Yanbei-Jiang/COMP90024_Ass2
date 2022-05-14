@@ -1,50 +1,41 @@
 {
-    
-    
-    "features": [
-        {
-            "properties": {
-                "f_advdip_and_dip_total": 60587,
-                "m_cert_lev_tot_total": 164071,
-                "m_bachdeg_total": 45455,
-                "m_graddip_and_gradcert_total": 7883,
-                "m_lev_edu_ns_total": 66141,
-                "f_lev_edu_ns_total": 69980,
-                "m_pgrad_deg_total": 11878,
-                "f_bachdeg_total": 74426,
-                "f_cert_lev_tot_total": 94335,
-                "f_graddip_and_gradcert_total": 16687,
-                "m_advdip_and_dip_total": 39014,
-                "f_lev_edu_ides_total": 3927,
-                "gcc_code16": "2RVIC",
-                "m_lev_edu_ides_total": 3231,
-                "f_pgrad_deg_total": 13870,
-                "m_tot_total": 337677,
-                "f_tot_total": 333815
-            },
-            "id": "gccsa_g46a_non_scl_qual_lvl_of_edu_by_age_by_sex_census_2016.fid-13603162_180bbf7858c_191e"
-        },
-        {
-            "properties": {
-                "f_advdip_and_dip_total": 194798,
-                "m_cert_lev_tot_total": 353062,
-                "m_bachdeg_total": 306975,
-                "m_graddip_and_gradcert_total": 33627,
-                "m_lev_edu_ns_total": 146257,
-                "f_lev_edu_ns_total": 161790,
-                "m_pgrad_deg_total": 117203,
-                "f_bachdeg_total": 370617,
-                "f_cert_lev_tot_total": 206028,
-                "f_graddip_and_gradcert_total": 60941,
-                "m_advdip_and_dip_total": 152216,
-                "f_lev_edu_ides_total": 15833,
-                "gcc_code16": "2GMEL",
-                "m_lev_edu_ides_total": 13765,
-                "f_pgrad_deg_total": 116849,
-                "m_tot_total": 1123109,
-                "f_tot_total": 1126854
-            },
-            "id": "gccsa_g46a_non_scl_qual_lvl_of_edu_by_age_by_sex_census_2016.fid-13603162_180bbf7858c_191f"
-        }
-    ]
+    "VIC_level": {
+        
+        "male_certificate_level": 164071,
+        "male_bachelor": 45455,
+        "male_graduate": 7883,
+        "male_inadequately": 3231,
+        "male_postgraduate": 11878,
+        "male_diploma": 39014,
+        "male_not_stated": 66141,
+        "male_total": 337677,
+        "female_certificate_level": 94335,
+        "female_bachelor": 74426,
+        "female_graduate": 16687,
+        "female_inadequately": 3927,
+        "female_postgraduate": 13870,
+        "female_diploma": 60587,
+        "female_not_stated": 69980,
+        "female_total": 333815,
+        "area": "VIC"
+    },
+    "MEL_level": {
+        "male_certificate_level": 353062,
+        "male_bachelor": 306975,
+        "male_graduate": 33627,
+        "male_inadequately": 13765,
+        "male_postgraduate": 117203,
+        "male_diploma": 152216,
+        "male_not_stated": 146257,
+        "male_total": 1123109,
+        "female_certificate_level": 206028,
+        "female_bachelor": 370617,
+        "female_graduate": 60941,
+        "female_inadequately": 15833,
+        "female_postgraduate": 116849,
+        "female_diploma": 194798,
+        "female_not_stated": 161790,
+        "female_total": 1126854,
+        "area": "MEL"
+    }
 }

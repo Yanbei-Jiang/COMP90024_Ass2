@@ -1,93 +1,42 @@
 {
-    
-    "features": [
-        {
-            
-            "properties": {
-                "value_tot_resial_building_aud000": 20224976,
-                "gcc_code16": "1GSYD",
-                "value_new_oth_resial_building_aud000": 11869529,
-                "value_new_houses_aud000": 6342767.5,
-                "gcc_name16": "Greater Sydney"
-            },
-            "id": "abs_building_approvals_gccsa_2017_18.1GSYD"
-        },
-        {
-            
-            "properties": {
-                "value_tot_resial_building_aud000": 6004923,
-                "gcc_code16": "1RNSW",
-                "value_new_oth_resial_building_aud000": 1618383.8,
-                "value_new_houses_aud000": 3698832.2,
-                "gcc_name16": "Rest of NSW"
-            },
-            "id": "abs_building_approvals_gccsa_2017_18.1RNSW"
-        },
-        {
-            
-            "properties": {
-                "value_tot_resial_building_aud000": 23041026,
-                "gcc_code16": "2GMEL",
-                "value_new_oth_resial_building_aud000": 10914212,
-                "value_new_houses_aud000": 9893940,
-                "gcc_name16": "Greater Melbourne"
-            },
-            "id": "abs_building_approvals_gccsa_2017_18.2GMEL"
-        },
-        {
-            
-            "properties": {
-                "value_tot_resial_building_aud000": 4387101,
-                "gcc_code16": "2RVIC",
-                "value_new_oth_resial_building_aud000": 381596.4,
-                "value_new_houses_aud000": 3451318.2,
-                "gcc_name16": "Rest of Vic."
-            },
-            "id": "abs_building_approvals_gccsa_2017_18.2RVIC"
-        },
-        {
-            
-            "properties": {
-                "value_tot_resial_building_aud000": 8000279.5,
-                "gcc_code16": "3GBRI",
-                "value_new_oth_resial_building_aud000": 3001496.2,
-                "value_new_houses_aud000": 4125473,
-                "gcc_name16": "Greater Brisbane"
-            },
-            "id": "abs_building_approvals_gccsa_2017_18.3GBRI"
-        },
-        {
-            
-            "properties": {
-                "value_tot_resial_building_aud000": 5822188,
-                "gcc_code16": "3RQLD",
-                "value_new_oth_resial_building_aud000": 1607320.6,
-                "value_new_houses_aud000": 3527058.8,
-                "gcc_name16": "Rest of Qld"
-            },
-            "id": "abs_building_approvals_gccsa_2017_18.3RQLD"
-        },
-        {
-            
-            "properties": {
-                "value_tot_resial_building_aud000": 3144296,
-                "gcc_code16": "4GADE",
-                "value_new_oth_resial_building_aud000": 1094980.9,
-                "value_new_houses_aud000": 1702742.8,
-                "gcc_name16": "Greater Adelaide"
-            },
-            "id": "abs_building_approvals_gccsa_2017_18.4GADE"
-        },
-        {
-            
-            "properties": {
-                "value_tot_resial_building_aud000": 520272.1,
-                "gcc_code16": "4RSAU",
-                "value_new_oth_resial_building_aud000": 6001.2,
-                "value_new_houses_aud000": 427007.6,
-                "gcc_name16": "Rest of SA"
-            },
-            "id": "abs_building_approvals_gccsa_2017_18.4RSAU"
-        }
-    ]
+    "Syd": {
+        "value_tot_resial_building": 20224976000,
+        "value_new_oth_resial_building": 11869529000,
+        "value_new_houses": 6342767500
+    },
+    "Rest_of_NSW": {
+        "value_tot_resial_building": 6004923000,
+        "value_new_oth_resial_building": 1618383800,
+        "value_new_houses": 3698832200
+    },
+    "MEL": {
+        "value_tot_resial_building": 23041026000,
+        "value_new_oth_resial_building": 10914212000,
+        "value_new_houses": 9893940000
+    },
+    "Rest_of_VIC": {
+        "value_tot_resial_building": 4387101000,
+        "value_new_oth_resial_building": 381596400,
+        "value_new_houses": 3451318200
+    },
+    "BRI": {
+        "value_tot_resial_building": 8000279500,
+        "value_new_oth_resial_building": 3001496200,
+        "value_new_houses": 4125473000
+    },
+    "Rest_of_QLD": {
+        "value_tot_resial_building": 5822188000,
+        "value_new_oth_resial_building": 1607320600,
+        "value_new_houses": 3527058800
+    },
+    "Ade": {
+        "value_tot_resial_building": 3144296000,
+        "value_new_oth_resial_building": 1094980900,
+        "value_new_houses": 1702742800
+    },
+    "Rest_of_SA": {
+        "value_tot_resial_building": 520272100,
+        "value_new_oth_resial_building": 6001200,
+        "value_new_houses": 427007600
+    }
 }
