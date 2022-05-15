@@ -20,7 +20,6 @@ def main():
     db.store_to_cache_db(json.load(doc_house_origin_data))
     db.store_to_cache_db(json.load(doc_house_price_metadata))
     
-main()
 
 
     
