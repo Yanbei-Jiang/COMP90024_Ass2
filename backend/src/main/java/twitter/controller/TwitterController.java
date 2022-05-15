@@ -2,26 +2,35 @@ package twitter.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.*;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
+import java.util.concurrent.*;
+
 import com.alibaba.fastjson.JSONObject;
 
 @RestController
 public class TwitterController {
 
     // database configuration
-    String dbConfiguration = "src/main/java/twitter/db_config.properties";
+    String dbConfiguration = "db_config.properties";
     String username;
     String password;
     String node0;
+    String node1;
+    String node2;
+    String[] nodeLists;
     String port;
     String oldDBName;
     String newDBName;
+    String proDBName;
+    String cacheTweetsDBName;
+    String cacheAurinDBName;
 
     /**
      * The initialzier which set up the database configuration
@@ -29,16 +38,24 @@ public class TwitterController {
     public TwitterController() {
         try {
             // read the configuration file .properties
-            InputStream file = new BufferedInputStream(new FileInputStream(dbConfiguration));
+            ClassPathResource source = new ClassPathResource(dbConfiguration);
+            InputStream file = source.getInputStream();
             Properties properties = new Properties();
-            properties.load(file);
+            properties.load(new BufferedReader(new InputStreamReader(file, "UTF-8")));
+
             // assign configuration
             username = (String)properties.get("username");
             password = (String)properties.get("password");
             node0 = (String)properties.get("node0");
+            node1 = (String)properties.get("node1");
+            node2 = (String)properties.get("node2");
+            nodeLists = new String[]{node0, node1, node2};
             port = (String)properties.get("port");
             oldDBName = (String)properties.get("old_db_name");
             newDBName = (String)properties.get("new_db_name");
+            proDBName = (String)properties.get("pro_db_name");
+            cacheTweetsDBName = (String)properties.get("cache_tweets_db_name");
+            cacheAurinDBName = (String)properties.get("cache_aurin_db_name");
         } catch (IOException e){
             System.out.println("DB Configuration does not exist");
         }
@@ -48,19 +65,128 @@ public class TwitterController {
      * Get the dataset from the couchdb
      */
     @Async
-    @RequestMapping("/twitter/get_data")
-    public List<JSONObject> getData(){
-        // generate the request
-        String url = "http://" + username + ":" + password + "@" + node0 + ":" + port + "/" + newDBName + "/_all_docs";
-        String[] cmds = {"curl", "-X", "GET", url};
-        // send request to couchdb and get the response
-        String resp = execCurl(cmds);
-        // transfer response from String to Json
-        JSONObject respJson = JSON.parseObject(resp);
-        // get the data
-        List<JSONObject> rows = JSONArray.parseArray(JSON.toJSONString(respJson.get("rows")), JSONObject.class);
+    @RequestMapping("/data/get_aurin")
+    public JSONObject getAurinData(){
 
-        return rows;
+        // the response body
+        JSONObject respJson = new JSONObject();
+
+        // communicate with couchdb to get all document's information
+        JSONObject dataSummaryJson = communicateWithCouchDB("/_all_docs", cacheAurinDBName);
+
+        // if there is no valid nodes can be used
+        if (dataSummaryJson == null){
+            respJson.put("status", 403);
+            respJson.put("error", "No available databases");
+            return respJson;
+        }
+
+        // get the data summary
+        List<JSONObject> rows = JSONArray.parseArray(JSON.toJSONString(dataSummaryJson.get("rows")), JSONObject.class);
+
+        // get each rows according to their id
+        for (int i = 0; i < rows.size(); i ++){
+            // extract id from thw data summary
+            String id = JSON.toJSONString(rows.get(i).get("id"));
+
+            // get each id's detailed document
+            JSONObject dataRow = communicateWithCouchDB("/" + id.replaceAll("\"", ""), cacheAurinDBName);
+
+            // extract informations from each rows
+            for (Map.Entry<String, Object> entry : dataRow.entrySet()) {
+                // filter out the default value in couchdb: _id and _rev
+                if (entry.getKey().equals("_id") || entry.getKey().equals("_rev")){
+                    continue;
+                }
+                respJson.put(entry.getKey(), entry.getValue());
+            }
+        }
+
+        respJson.put("status", 200);
+        return respJson;
+    }
+
+    /**
+     *
+     */
+    @Async
+    @RequestMapping("/data/get_tweets")
+    public JSONObject getTweetsData(){
+        // the response body
+        JSONObject respJson = new JSONObject();
+
+        return respJson;
+    }
+
+
+    /**
+     * Send request to the couchdb followed by receiving response
+     * @param urlTail the url tail of request
+     * @param dbName the db name be sent the request
+     * @return the json format response from the couchdb
+     */
+    private JSONObject communicateWithCouchDB(String urlTail, String dbName){
+        // response
+        JSONObject respJson = null;
+
+        // candidate node
+        List<String> candidateNodes = new ArrayList<>();
+        candidateNodes.add(nodeLists[0]);
+        candidateNodes.add(nodeLists[1]);
+        candidateNodes.add(nodeLists[2]);
+
+        // to balance the server's load, the back-end will randomly select a node to visit
+        Random random = new Random();
+        int nodeIndex = random.nextInt(3);
+        // get the node
+        String node = candidateNodes.get(nodeIndex);
+        // remove the node be used from the candidate
+        candidateNodes.remove(nodeIndex);
+
+        // try to connect the couchdb
+        // if the request time exceeds the limit, change another node to try
+        while (true) {
+
+            // end the loop if getting response
+            if (respJson != null){
+                break;
+            }
+            // end the loop if there is no more nodes can be used
+            if (candidateNodes.size() == 0){
+                break;
+            }
+
+            // establish the task to communicate with couchdb
+            String finalNode = node;
+            Callable<String> task = new Callable<String>() {
+                @Override
+                public String call() throws Exception {
+                    // generate the request
+                    String url = "http://" + username + ":" + password + "@" + finalNode + ":" + port + "/" + dbName + urlTail;
+                    String[] cmds = {"curl", "-X", "GET", url};
+                    // send request to couchdb and get the response
+                    String resp = execCurl(cmds);
+                    return resp;
+                }
+            };
+
+            // try to run the curl task
+            ExecutorService exeservices = Executors.newSingleThreadExecutor();
+            Future<String> future = exeservices.submit(task);
+            try {
+                // run the method
+                String result = future.get(3, TimeUnit.SECONDS);
+                // transfer response from String to Json
+                respJson = JSON.parseObject(result);
+            }
+            // time exceeds, change another node to try
+            catch (Exception e) {
+                node = candidateNodes.get(0);
+                candidateNodes.remove(node);
+            }
+        }
+
+        return respJson;
     }
 
     /**
@@ -68,7 +194,7 @@ public class TwitterController {
      * @param cmds the curl request
      * @return response from server
      */
-    private static String execCurl(String[] cmds) {
+    private String execCurl(String[] cmds) {
         ProcessBuilder process = new ProcessBuilder(cmds);
         Process p;
         try {

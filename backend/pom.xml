@@ -9,8 +9,8 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.twitter</groupId>
-    <artifactId>backend</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <artifactId>cloud-backend</artifactId>
+    <version>1</version>
     <name>backend</name>
     <description>backend</description>
     <properties>
@@ -44,4 +44,9 @@
         </plugins>
     </build>
 
+    <packaging>jar</packaging>
+
+
 </project>
+
+
