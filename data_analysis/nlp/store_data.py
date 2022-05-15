@@ -4,7 +4,7 @@ from db_load_data import *
 from nlp.analysis import *
 from itertools import zip_longest
 
-def main():
+def nlp_main():
     initialize_couchdb()
     old_tweets = get_spec_db("old_tweets")
     original_tweets = get_spec_db("original_tweets")

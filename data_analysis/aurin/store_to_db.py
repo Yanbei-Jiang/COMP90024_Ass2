@@ -4,7 +4,7 @@
 from db_load_data import *
 import json 
 
-def main():
+def aurin_main():
     doc_education_level = open("aurin/education_level.json",'r')
     doc_housing_price = open("aurin/housing_price.json",'r')
     doc_education_metadata = open("aurin/education_metadata.json",'r')
