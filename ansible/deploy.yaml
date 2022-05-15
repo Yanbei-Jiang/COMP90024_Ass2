@@ -30,3 +30,13 @@
   roles:
     #- role: couchdb-cluster-setup
     - role: crawler-setup
+
+# - hosts: 172.26.134.178
+#   vars_files:
+#     - host_vars/nectar.yaml
+#   vars:
+#     - ansible_user: ubuntu
+#     - ansible_ssh_private_key_file: "{{ ssh_private_key_path }}"
+#     - ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
+#   roles:
+#     - role: analysis-setup

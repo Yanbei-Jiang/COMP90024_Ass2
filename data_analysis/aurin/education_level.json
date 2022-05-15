@@ -1,0 +1,41 @@
+{
+    "VIC_level": {
+        
+        "male_certificate_level": 164071,
+        "male_bachelor": 45455,
+        "male_graduate": 7883,
+        "male_inadequately": 3231,
+        "male_postgraduate": 11878,
+        "male_diploma": 39014,
+        "male_not_stated": 66141,
+        "male_total": 337677,
+        "female_certificate_level": 94335,
+        "female_bachelor": 74426,
+        "female_graduate": 16687,
+        "female_inadequately": 3927,
+        "female_postgraduate": 13870,
+        "female_diploma": 60587,
+        "female_not_stated": 69980,
+        "female_total": 333815,
+        "area": "VIC"
+    },
+    "MEL_level": {
+        "male_certificate_level": 353062,
+        "male_bachelor": 306975,
+        "male_graduate": 33627,
+        "male_inadequately": 13765,
+        "male_postgraduate": 117203,
+        "male_diploma": 152216,
+        "male_not_stated": 146257,
+        "male_total": 1123109,
+        "female_certificate_level": 206028,
+        "female_bachelor": 370617,
+        "female_graduate": 60941,
+        "female_inadequately": 15833,
+        "female_postgraduate": 116849,
+        "female_diploma": 194798,
+        "female_not_stated": 161790,
+        "female_total": 1126854,
+        "area": "MEL"
+    }
+}

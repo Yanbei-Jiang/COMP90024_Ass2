@@ -1,0 +1,42 @@
+{
+    "Syd": {
+        "value_tot_resial_building": 20224976000,
+        "value_new_oth_resial_building": 11869529000,
+        "value_new_houses": 6342767500
+    },
+    "Rest_of_NSW": {
+        "value_tot_resial_building": 6004923000,
+        "value_new_oth_resial_building": 1618383800,
+        "value_new_houses": 3698832200
+    },
+    "MEL": {
+        "value_tot_resial_building": 23041026000,
+        "value_new_oth_resial_building": 10914212000,
+        "value_new_houses": 9893940000
+    },
+    "Rest_of_VIC": {
+        "value_tot_resial_building": 4387101000,
+        "value_new_oth_resial_building": 381596400,
+        "value_new_houses": 3451318200
+    },
+    "BRI": {
+        "value_tot_resial_building": 8000279500,
+        "value_new_oth_resial_building": 3001496200,
+        "value_new_houses": 4125473000
+    },
+    "Rest_of_QLD": {
+        "value_tot_resial_building": 5822188000,
+        "value_new_oth_resial_building": 1607320600,
+        "value_new_houses": 3527058800
+    },
+    "Ade": {
+        "value_tot_resial_building": 3144296000,
+        "value_new_oth_resial_building": 1094980900,
+        "value_new_houses": 1702742800
+    },
+    "Rest_of_SA": {
+        "value_tot_resial_building": 520272100,
+        "value_new_oth_resial_building": 6001200,
+        "value_new_houses": 427007600
+    }
+}
