@@ -3,7 +3,7 @@ from nltk.sentiment import SentimentIntensityAnalyzer
 from textblob import TextBlob
 
 def sentiment_analysis(text):
-    # nltk.download('vader_lexicon')
+    nltk.download('vader_lexicon')
     analyzer = SentimentIntensityAnalyzer()
     scores = analyzer.polarity_scores(text)
     if scores["neu"] > 0.8:
