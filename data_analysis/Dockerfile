@@ -4,6 +4,6 @@ WORKDIR /usr/src/app
 
 COPY . .
 
-RUN pip install -r crawler_dependencies.txt
+RUN pip install -r analysis_dependencies.txt
 
 CMD ["python", "main.py"]
