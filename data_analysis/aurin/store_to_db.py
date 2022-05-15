@@ -1,6 +1,6 @@
 # import sys
-import sys
-sys.path.append("../crawler")
+# import sys
+# sys.path.append("../crawler")
 from db_load_data import *
 import json 
 
