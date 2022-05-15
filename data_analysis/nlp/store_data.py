@@ -1,5 +1,5 @@
 import sys
-sys.path.append("..\crawler")
+sys.path.append("../crawler")
 from db_load_data import *
 from nlp.analysis import *
 from itertools import zip_longest
