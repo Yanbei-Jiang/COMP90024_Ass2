@@ -20,8 +20,7 @@ def aurin_main():
     store_to_aurin_cache_db(json.load(doc_house_origin_data))
     store_to_aurin_cache_db(json.load(doc_house_price_metadata))
     
-db_load_data.initialize_couchdb()
-db_load_data.store_to_aurin_cache_db([{"1":"2"}])
+
     
     
     
