@@ -7,16 +7,21 @@ def sentiment_analysis(text):
     analyzer = SentimentIntensityAnalyzer()
     scores = analyzer.polarity_scores(text)
     if scores["neu"] > 0.8:
-        return "neu"
+        #0 indicates = "neu"
+        return 0
     elif scores["pos"] > scores["neg"]:
-        return "pos"
+        #1 indicates = "pos"
+        return 1
     else:
-        return "neg"
+        #-1 indicates = "neg"
+        return -1
 
 
 def polarity_analysis(text):
     polarity = TextBlob(text).sentiment
     if polarity[1] > 0.5:
-        return "subjective"
+        # 0 indicates "subjective"
+        return 0
     else:
-        return "objective"
+        # 1 indicates "objective"
+        return 1
