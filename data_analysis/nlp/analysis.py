@@ -3,16 +3,28 @@ from nlp.sentiment_polarity import *
 #from topic_extraction import *
 
 def old_tweet_analysis(tweet_obj):
-    text = tweet_obj["doc"]["text"]
-    coordinates = tweet_obj["doc"]["place"]["bounding_box"]["coordinates"][0]
+    new_tweet_obj = {}
+    for key in tweet_obj.keys():
+        if key != "_id" and key != "_rev":
+            new_tweet_obj[key] = tweet_obj[key]
+    text = new_tweet_obj["doc"]["text"]
+    coordinates = new_tweet_obj["doc"]["place"]["bounding_box"]["coordinates"][0]
     area = filter_area(coordinates)
-    tweet_obj["melbourne_area"] = area
+    new_tweet_obj["melbourne_area"] = area
     processed_text = preprocess(text)
     sentiment = sentiment_analysis(processed_text)
-    tweet_obj["sentiment"] = sentiment
+    new_tweet_obj["sentiment"] = sentiment
     polarity = polarity_analysis(processed_text)
-    tweet_obj["polarity"] = polarity
-    return tweet_obj
+    new_tweet_obj["polarity"] = polarity
+    
+    new_tweet_obj["education"] = is_education_topic(processed_text)
+    new_tweet_obj["house"] = is_house_topic(processed_text)
+    time_list = new_tweet_obj["doc"]["created_at"].split(" ")
+    new_tweet_obj["week"] = time_list[0]
+    new_tweet_obj["day"] = time_list[2]
+    new_tweet_obj["month"] = time_list[1]
+    new_tweet_obj["year"] = time_list[5]
+    return new_tweet_obj
 
 
 def new_tweet_analysis(tweet_obj):
@@ -35,6 +47,14 @@ def new_tweet_analysis(tweet_obj):
     new_tweet_obj["sentiment"] = sentiment
     polarity = polarity_analysis(processed_text)
     new_tweet_obj["polarity"] = polarity
+    new_tweet_obj["education"] = is_education_topic(processed_text)
+    new_tweet_obj["house"] = is_house_topic(processed_text)
+
+    time_list = new_tweet_obj["created_at"].split(" ")
+    new_tweet_obj["week"] = time_list[0]
+    new_tweet_obj["day"] = time_list[2]
+    new_tweet_obj["month"] = time_list[1]
+    new_tweet_obj["year"] = time_list[5]
     return new_tweet_obj
 
 
@@ -59,6 +79,24 @@ def filter_area(coordinates):
 
     return "other"
 
+
+def is_education_topic(text):
+    text = text.lower()
+    related_words = ["education","teacher","professor","tutor","student","university","graduation","school","tuition","middle school","primary school","high school","diploma","undergraduate","graduate","phd"]
+    for word in related_words:
+        if word in text:
+            return 1
+    return 0
+
+
+def is_house_topic(text):
+    text = text.lower()
+    related_words = ["house price", "rent","house","apartment","property","home","accommodation","real estate"]
+    for word in related_words:
+        if word in text:
+            return 1
+    return 0
+               
 
 def preprocess(text):
     new_text = []
