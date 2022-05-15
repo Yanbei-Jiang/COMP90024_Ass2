@@ -123,7 +123,7 @@ def start_run():
 
 if __name__ == "__main__":  
     db_load_data.initialize_couchdb()
-    # start_run()
+    start_run()
     schedule.every().day.at("04:00").do(start_run)
     schedule.every().day.at("16:00").do(start_run)
     while(True):
