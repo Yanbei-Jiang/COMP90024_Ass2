@@ -14,11 +14,11 @@ def main():
 
     db.initialize_couchdb()
     db.store_to_aurin_cache_db(json.load(doc_education_level))
-    db.store_to_cache_db(json.load(doc_housing_price))
-    db.store_to_cache_db(json.load(doc_education_metadata))
-    db.store_to_cache_db(json.load(doc_education_origin_data))
-    db.store_to_cache_db(json.load(doc_house_origin_data))
-    db.store_to_cache_db(json.load(doc_house_price_metadata))
+    db.store_to_aurin_cache_db(json.load(doc_housing_price))
+    db.store_to_aurin_cache_db(json.load(doc_education_metadata))
+    db.store_to_aurin_cache_db(json.load(doc_education_origin_data))
+    db.store_to_aurin_cache_db(json.load(doc_house_origin_data))
+    db.store_to_aurin_cache_db(json.load(doc_house_price_metadata))
     
 
 
