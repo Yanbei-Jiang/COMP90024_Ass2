@@ -63,7 +63,7 @@ public class TwitterController {
     }
 
     /**
-     * Get the dataset from the couchdb
+     * Get the aurin dataset from the couchdb
      */
     @Async
     @RequestMapping("/data/get_aurin")
@@ -92,6 +92,12 @@ public class TwitterController {
 
             // get each id's detailed document
             JSONObject dataRow = communicateWithCouchDB("/" + id.replaceAll("\"", ""), cacheAurinDBName);
+            // if there is no valid nodes can be used
+            if (dataRow == null){
+                respJson.put("status", 403);
+                respJson.put("error", "No available databases");
+                return respJson;
+            }
 
             // extract informations from each rows
             for (Map.Entry<String, Object> entry : dataRow.entrySet()) {
@@ -108,14 +114,43 @@ public class TwitterController {
     }
 
     /**
-     *
+     * Get the tweets dataset from the couchdb
+     * @return
      */
     @Async
     @RequestMapping("/data/get_tweets")
     public JSONObject getTweetsData(){
         // the response body
         JSONObject respJson = new JSONObject();
+
+        // communicate with couchdb to get all document's information
+        JSONObject dataSummaryJson = communicateWithCouchDB("/_all_docs", cacheTweetsDBName);
+        // if there is no valid nodes can be used
+        if (dataSummaryJson == null){
+            respJson.put("status", 403);
+            respJson.put("error", "No available databases");
+            return respJson;
+        }
+
+        // get the data summary
+        List<JSONObject> rows = JSONArray.parseArray(JSON.toJSONString(dataSummaryJson.get("rows")), JSONObject.class);
+
+        // get the newest document
+        int rowNum = rows.size();
+        String id = JSON.toJSONString(rows.get(rowNum - 1).get("id"));
+        // get the detailed content of the newest document
+        JSONObject dataRow = communicateWithCouchDB("/" + id.replaceAll("\"", ""), cacheTweetsDBName);
+        // if there is no valid nodes can be used
+        if (dataRow == null){
+            respJson.put("status", 403);
+            respJson.put("error", "No available databases");
+            return respJson;
+        }
+
+        // return the data
+        respJson = (JSONObject)dataRow.get("data");
         respJson.put("status", 200);
+
         return respJson;
     }
 
