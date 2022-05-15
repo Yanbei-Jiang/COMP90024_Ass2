@@ -149,9 +149,9 @@ def store_to_processed_db(data):
     global couch
 
     # duplication check
-    duplicateId = get_spec_db(pro_db_name).find({"selector" : {"id": data["id"]}})
-    if (len(list(duplicateId)) == 0):
-        get_spec_db(pro_db_name).save(data)
+    # duplicateId = get_spec_db(pro_db_name).find({"selector" : {"id": data["id"]}})
+    # if (len(list(duplicateId)) == 0):
+    get_spec_db(pro_db_name).save(data)
     
 def store_to_cache_db(data):
     '''

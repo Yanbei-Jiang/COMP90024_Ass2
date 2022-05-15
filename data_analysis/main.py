@@ -4,6 +4,6 @@
 
 from aurin import store_to_db
 from nlp import store_data
-store_to_db.aurin_main()
+#store_to_db.aurin_main()
 
 store_data.nlp_main()
