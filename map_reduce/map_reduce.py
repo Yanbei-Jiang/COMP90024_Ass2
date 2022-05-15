@@ -123,9 +123,11 @@ def start_run():
 
 if __name__ == "__main__":  
     initialize_couchdb()
-    start_run()
-    # schedule.every().day.at("04:00").do(start_run)
-    # schedule.every().day.at("16:00").do(start_run)
-    # while(True):
-    #     schedule.run_pending()
+    #start_run()    
+    schedule.every().day.at("04:00").do(start_run)
+    schedule.every().day.at("10:00").do(start_run)
+    schedule.every().day.at("16:00").do(start_run)
+    schedule.every().day.at("22:00").do(start_run)
+    while(True):
+        schedule.run_pending()
 
