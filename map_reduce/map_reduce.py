@@ -1,4 +1,4 @@
-from db_load_data import *
+import db_load_data
 import datetime
 import schedule
 
@@ -111,18 +111,18 @@ def map_reduce(db):
         row_name = name+'/'+key_value
         for row in db.view(row_name,group=True):
             result['data'][key_value][row.key[3]].append({"date":row.key[1],"coord":row.key[2],'area':row.key[3],'value':row.value})
-    store_to_cache_db(result)
+    db_load_data.store_to_cache_db(result)
     
 
 
 
 
 def start_run():
-    processed = get_spec_db('processed_tweets')
+    processed = db_load_data.get_spec_db('processed_tweets')
     map_reduce(processed)
 
 if __name__ == "__main__":  
-    initialize_couchdb()
+    db_load_data.initialize_couchdb()
     # start_run()
     schedule.every().day.at("04:00").do(start_run)
     schedule.every().day.at("16:00").do(start_run)
