@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONArray;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -114,7 +115,7 @@ public class TwitterController {
     public JSONObject getTweetsData(){
         // the response body
         JSONObject respJson = new JSONObject();
-
+        respJson.put("status", 200);
         return respJson;
     }
 
