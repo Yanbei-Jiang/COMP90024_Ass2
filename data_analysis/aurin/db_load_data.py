@@ -160,7 +160,7 @@ def store_to_cache_db(data):
     '''
     global cache_tweets_db_name
     global couch
-    
+
     get_spec_db(cache_tweets_db_name).save(data)
 
 def get_data_from_db(db_name):

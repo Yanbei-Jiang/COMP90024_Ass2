@@ -9,6 +9,7 @@ import db_load_data
 import read_data
 from pytz import utc
 
+old_data_bacup_line = 0
 
 def set_configuration():
     '''
@@ -51,7 +52,7 @@ def set_configuration():
         print("Initialize the Crawlers Successfully.\n")
 
     except KeyError:
-        print('\nMissing the key of Api or Access, please check the file')
+        print('\nSet Search Crawler: Missing the key of Api or Access, please check the file')
         exit(1)
 
 
@@ -125,25 +126,8 @@ def set_configuration_stream():
         print("Initialize the Stream Crawlers Successfully.\n")
 
     except KeyError:
-        print('\nMissing the key of Api or Access, please check the file')
+        print('\nSet Stream Crawler: Missing the key of Api or Access, please check the file')
         exit(1)
-
-
-# def restart_crawlers_stream():
-#     '''
-#     Restart all crawler threads
-#     '''
-#     # wait all threads to avoid repetitive start
-#     listener_stream_account_1.wait()
-#     listener_stream_account_2.wait()
-#     listener_stream_account_3.wait()
-
-#     # restart
-#     print("--------------Restart Crawlers--------------")
-#     listener_stream_account_1.start()
-#     listener_stream_account_2.start()
-#     listener_stream_account_3.start()
-#     print("Restart Three Crawlers Successfully")
 
 
 def start_crawlers_stream():
@@ -166,23 +150,39 @@ def start_crawlers_stream():
 
     # while (True):
     #     schedule.run_pending()
-        
 
-def initialize_db():
+
+def initialize_backup():
     '''
-    Provide the API to initialize the couch db
+    Get the backup information from file
     '''
-    db_load_data.initialize_couchdb()
+    global old_data_bacup_line
+
+    # get the configuration of backup
+    config_stream_file = 'db_backup.ini'
+    # read the configuration
+    try:
+        config = configparser.ConfigParser()
+        config.read(config_stream_file)
+        old_data_bacup_line = int(config['old_data']['end'])
+
+    except KeyError:
+        print('\nBackup: Missing the key of Api or Access, please check the file')
+        exit(1)
 
 
 
 # initialize the db
 initialize_db()
 
-#start reading the old data
-read_data.read_data_file("./twitter-melb.json")
+# initialize back-up set
+initialize_backup()
 
-# start crawlers
+#start reading the old data
+old_data_reader = read_data.OldDataRead(old_data_bacup_line, "./twitter-melb.json")
+old_data_reader.start()
+
+# # start crawlers
 start_crawlers_stream()
 
 # daily search
