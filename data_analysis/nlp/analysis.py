@@ -62,7 +62,6 @@ def filter_area(coordinates):
     melbourne_city = [144.913581,-37.839086,144.994266,-37.781922]
     melbourne_kew = [144.999392,-37.855040,145.141140,-37.786685]
     Hoppers_Crossing = [144.633666,-37.974500,144.913581,-37.694900]
-
     left_bound = coordinates[0][0]
     right_bound = coordinates[2][0]
     top_bound = coordinates[1][1]

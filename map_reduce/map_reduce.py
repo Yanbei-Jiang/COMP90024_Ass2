@@ -101,16 +101,19 @@ def map_reduce(db):
     key_list =[]
     for key in db["_design/"+name]["views"]:
             key_list.append(key)
+            print(key)
     result = {"_id": "_design/"+name,"data":{}}
     for key_value in key_list:
         row_name = name+'/'+key_value
         result['data'][key_value] = {} 
         for row in db.view(row_name,group=True):
             result['data'][key_value].update({row.key[3]:[]})
+    print(key_list)
     for key_value in key_list:
         row_name = name+'/'+key_value
         for row in db.view(row_name,group=True):
             result['data'][key_value][row.key[3]].append({"date":row.key[1],"coord":row.key[2],'area':row.key[3],'value':row.value})
+    print(row)
     db_load_data.store_to_cache_db(result)
     
 
@@ -124,9 +127,9 @@ def start_run():
 if __name__ == "__main__":  
     db_load_data.initialize_couchdb()
     start_run()
-    schedule.every().day.at("04:00").do(start_run)
-    schedule.every().day.at("16:00").do(start_run)
-    while(True):
-        schedule.run_pending()
+    # schedule.every().day.at("04:00").do(start_run)
+    # schedule.every().day.at("16:00").do(start_run)
+    # while(True):
+    #     schedule.run_pending()
 
 
