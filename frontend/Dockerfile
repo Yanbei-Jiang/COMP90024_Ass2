@@ -6,6 +6,7 @@ WORKDIR /usr/src/app
 
 COPY . .
 
-RUN npm i react-scripts --force
+RUN npm install -g react-scripts
+RUN npm install --force
 
 CMD ["npm", "start"]
