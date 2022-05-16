@@ -35,8 +35,8 @@ def new_tweet_analysis(tweet_obj):
         # only look at the third key (i.e. "Hoppers_Crossing_1522304716188700672_stream")
         if key != "_id" and key != "_rev" and key !="id":
             new_tweet_obj = tweet_obj[key]
-            if new_tweet_obj["doc"]["place"]:
-                coordinates = tweet_obj[key]["place"]["bounding_box"]["coordinates"][0]
+            if new_tweet_obj["place"]:
+                coordinates = new_tweet_obj["place"]["bounding_box"]["coordinates"][0]
                 area = filter_area(coordinates)
                 new_tweet_obj["melbourne_area"] = area
             else:
