@@ -1,0 +1,37 @@
+[
+    {
+        "id": 1078374,
+        "email": "zeningz@student.unimelb.edu.au",
+        "firstName": "Zening",
+        "lastName": "Zhang",
+        "job": "Twitter api crawler map_reduce"
+    },
+    {
+        "id": 1041260,
+        "email": "hanwang2@student.unimelb.edu.au",
+        "firstName": "Han",
+        "lastName": "Wang",
+        "job": "ansible aurin"
+    },
+    {
+        "id": 1002781,
+        "email": "yiwzhang1@student.unimelb.edu.au",
+        "firstName": "Yiwen",
+        "lastName": "Zhang",
+        "job": "Frontend Development"
+    },
+    {
+        "id": 1074198,
+        "email": "gewg@student.unimelb.edu.au",
+        "firstName": "Wei",
+        "lastName": "Ge",
+        "job": "backend couchdb"
+    },
+    {
+        "id": 1087029,
+        "email": "yanbeij@student.unimelb.edu.au",
+        "firstName": "Yanbei",
+        "lastName": "Jiang",
+        "job": "ansible nlp"
+    }
+]
