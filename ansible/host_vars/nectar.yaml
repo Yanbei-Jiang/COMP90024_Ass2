@@ -6,7 +6,6 @@ instance_flavor: uom.mse.2c9g
 hosts_file_path: ./hosts
 ssh_private_key_path: /home/yanbeij/.ssh/id_grp3.pem
 github_key_path: /home/yanbeij/.ssh/yanbeij_key
-couchdb_master: 172.26.133.54
 couchdb_image: ibmcom/couchdb3:latest
 couchdb_user: admin
 couchdb_password: admin
