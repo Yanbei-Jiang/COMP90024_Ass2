@@ -21,7 +21,7 @@ This project presents all the works have been doen for the University of Melbour
     ```sudo ./deploy.sh```
 # directory structure
 ```
-| /ansible
+  /ansible
   /backend
   /crawler
   /data_analysis
