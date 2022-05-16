@@ -1,12 +1,18 @@
-FROM node:14.15.0
+FROM node:16.15.0
 
 EXPOSE 3000
 
-WORKDIR /usr/src/app
+# WORKDIR /usr/src/app
 
-COPY . .
+COPY src src
 
-RUN npm install -g react-scripts
-RUN npm install --force
+COPY public public
+
+COPY package.json package.json
+
+COPY ".env.local" ".env.local"
+
+RUN npm install --save --force
+RUN npm install react-scripts -g
 
 CMD ["npm", "start"]
