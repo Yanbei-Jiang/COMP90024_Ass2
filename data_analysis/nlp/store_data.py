@@ -14,13 +14,13 @@ def nlp_main():
     for tweet_old, tweet_new in zip_longest(old_tweets,original_tweets):
         if tweet_old:            
             count += 1            
-            if count >= 4650:
+            if count >= 66170:
                 processed_old = old_tweet_analysis(old_tweets[tweet_old])
                 store_to_processed_db(processed_old)
 
         if tweet_new:             
             count += 1
-            if count >= 4650:
+            if count >= 66170:
                 processed_new = new_tweet_analysis(original_tweets[tweet_new])
                 store_to_processed_db(processed_new)
 
