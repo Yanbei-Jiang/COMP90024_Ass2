@@ -96,7 +96,7 @@ def map_reduce(db):
                 }
             } 
     
-    name = datetime.datetime.now().now().strftime('%m%d%H')
+    name = datetime.datetime.now().now().strftime('%Y%m%d%H')
     db["_design/"+name] = dict(language='javascript', views=design)
     key_list =[]
     for key in db["_design/"+name]["views"]:
@@ -114,7 +114,18 @@ def map_reduce(db):
     store_to_cache_db(result)
     
 
-
+def delete_one_day_ago_file():
+    time = (datetime.datetime.now() - datetime.timedelta(days = 1)).strftime('%Y%m%d%H')
+    cache = get_spec_db('cache_tweets')
+    processed = get_spec_db('processed_tweets')
+    
+    try:
+        file_cache = cache["_desgin/"+time]
+        file_processed = processed["_desgin/"+time]
+        cache.delete(file_cache)
+        processed.delete(file_processed)
+    except:
+        print("File "+time+" does not exist, but do not worry, This error could be ignore")
 
 
 def start_run():
@@ -123,11 +134,10 @@ def start_run():
 
 if __name__ == "__main__":  
     initialize_couchdb()
-    #start_run()    
-    schedule.every().day.at("04:00").do(start_run)
-    schedule.every().day.at("10:00").do(start_run)
-    schedule.every().day.at("16:00").do(start_run)
-    schedule.every().day.at("22:00").do(start_run)
+    # start_run()    
+    # delete_one_day_ago_file()
+    schedule.every().hour.do(start_run)
+    schedule.every().hour.do(delete_one_day_ago_file)
     while(True):
         schedule.run_pending()
 
