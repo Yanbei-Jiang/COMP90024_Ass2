@@ -46,9 +46,9 @@
       groups['instances'][1] }}\n{{ groups['instances'][2] }}\n\n[FrontBackEnd]\n{{ groups['instances'][3] }}\n"
     dest: "{{ hosts_file_path }}"
 
-# - name: Assign ipv4 address
-#   lineinfile:
-#     line: "{{ item.openstack.public_v4 }}\n"
-#     dest: "{{ hosts_file_absolute_path }}"
-#   loop: '{{ item.openstack.public_v4 }}'
-#   when: item.openstack is defined
+- name: Assign ipv4 address
+  lineinfile:
+    line: "{{ item.openstack.public_v4 }}\n"
+    dest: "{{ hosts_file_absolute_path }}"
+  loop: '{{ item.openstack.public_v4 }}'
+  when: item.openstack is defined

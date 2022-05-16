@@ -1,3 +1,10 @@
+"""
+Author: Wei Ge - 1074198
+        Han Wang - 1041260 
+        YanBei Jiang - 1087029
+        Yiwen Zhang - 1002781
+        Zening Zhang - 1078374
+"""
 # import sys
 # sys.path.append("../crawler")
 from db_load_data import *
