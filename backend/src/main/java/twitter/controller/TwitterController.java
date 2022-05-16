@@ -15,6 +15,8 @@ import java.util.concurrent.*;
 
 import com.alibaba.fastjson.JSONObject;
 
+import javax.sql.rowset.spi.SyncResolver;
+
 @RestController
 public class TwitterController {
 
@@ -72,45 +74,44 @@ public class TwitterController {
         // the response body
         JSONObject respJson = new JSONObject();
 
-        // communicate with couchdb to get all document's information
-        JSONObject dataSummaryJson = communicateWithCouchDB("/_all_docs", cacheAurinDBName);
+        try {
 
-        // if there is no valid nodes can be used
-        if (dataSummaryJson == null){
+            // communicate with couchdb to get all document's information
+            JSONObject dataSummaryJson = communicateWithCouchDB("/_all_docs", cacheAurinDBName);
+
+            // get the data summary
+            List<JSONObject> rows = JSONArray.parseArray(JSON.toJSONString(dataSummaryJson.get("rows")), JSONObject.class);
+
+            // get each rows according to their id
+            for (int i = 0; i < rows.size(); i++) {
+                // extract id from thw data summary
+                String id = JSON.toJSONString(rows.get(i).get("id"));
+
+                // get each id's detailed document
+                JSONObject dataRow = communicateWithCouchDB("/" + id.replaceAll("\"", ""), cacheAurinDBName);
+
+                // extract informations from each rows
+                for (Map.Entry<String, Object> entry : dataRow.entrySet()) {
+                    // filter out the default value in couchdb: _id and _rev
+                    if (entry.getKey().equals("_id") || entry.getKey().equals("_rev")) {
+                        continue;
+                    }
+                    respJson.put(entry.getKey(), entry.getValue());
+                }
+            }
+
+            respJson.put("status", 200);
+            return respJson;
+        }
+
+        // no available database source
+        catch (Exception e){
+            // re-initialize the response because 'respJson = (JSONObject) dataRow.get("data");' may cause the response to be null
+            respJson = new JSONObject();
             respJson.put("status", 403);
             respJson.put("error", "No available databases");
             return respJson;
         }
-
-        // get the data summary
-        List<JSONObject> rows = JSONArray.parseArray(JSON.toJSONString(dataSummaryJson.get("rows")), JSONObject.class);
-
-        // get each rows according to their id
-        for (int i = 0; i < rows.size(); i ++){
-            // extract id from thw data summary
-            String id = JSON.toJSONString(rows.get(i).get("id"));
-
-            // get each id's detailed document
-            JSONObject dataRow = communicateWithCouchDB("/" + id.replaceAll("\"", ""), cacheAurinDBName);
-            // if there is no valid nodes can be used
-            if (dataRow == null){
-                respJson.put("status", 403);
-                respJson.put("error", "No available databases");
-                return respJson;
-            }
-
-            // extract informations from each rows
-            for (Map.Entry<String, Object> entry : dataRow.entrySet()) {
-                // filter out the default value in couchdb: _id and _rev
-                if (entry.getKey().equals("_id") || entry.getKey().equals("_rev")){
-                    continue;
-                }
-                respJson.put(entry.getKey(), entry.getValue());
-            }
-        }
-
-        respJson.put("status", 200);
-        return respJson;
     }
 
     /**
@@ -123,35 +124,40 @@ public class TwitterController {
         // the response body
         JSONObject respJson = new JSONObject();
 
-        // communicate with couchdb to get all document's information
-        JSONObject dataSummaryJson = communicateWithCouchDB("/_all_docs", cacheTweetsDBName);
-        // if there is no valid nodes can be used
-        if (dataSummaryJson == null){
+        try {
+            // communicate with couchdb to get all document's information
+            JSONObject dataSummaryJson = communicateWithCouchDB("/_all_docs", cacheTweetsDBName);
+
+            // get the data summary
+            List<JSONObject> rows = JSONArray.parseArray(JSON.toJSONString(dataSummaryJson.get("rows")), JSONObject.class);
+
+            // get the newest document
+            String newestId = "000000";
+            // get each rows according to their id
+            for (int i = 0; i < rows.size(); i++) {
+                // extract id from thw data summary
+                String currId = JSON.toJSONString(rows.get(i).get("id")).replaceAll("_design/", "").replaceAll("\"", "");
+                // compare the newest document id
+                if (Integer.valueOf(newestId) < Integer.valueOf(currId)) {
+                    newestId = currId;
+                }
+            }
+
+            // get the detailed content of the newest document
+            JSONObject dataRow = communicateWithCouchDB("/_design/" + newestId, cacheTweetsDBName);
+            // return the data
+            respJson = (JSONObject) dataRow.get("data");
+            respJson.put("status", 200);
+            return respJson;
+        }
+        // no available database source
+        catch (Exception e){
+            // re-initialize the response because 'respJson = (JSONObject) dataRow.get("data");' may cause the response to be null
+            respJson = new JSONObject();
             respJson.put("status", 403);
             respJson.put("error", "No available databases");
             return respJson;
         }
-
-        // get the data summary
-        List<JSONObject> rows = JSONArray.parseArray(JSON.toJSONString(dataSummaryJson.get("rows")), JSONObject.class);
-
-        // get the newest document
-        int rowNum = rows.size();
-        String id = JSON.toJSONString(rows.get(rowNum - 1).get("id"));
-        // get the detailed content of the newest document
-        JSONObject dataRow = communicateWithCouchDB("/" + id.replaceAll("\"", ""), cacheTweetsDBName);
-        // if there is no valid nodes can be used
-        if (dataRow == null){
-            respJson.put("status", 403);
-            respJson.put("error", "No available databases");
-            return respJson;
-        }
-
-        // return the data
-        respJson = (JSONObject)dataRow.get("data");
-        respJson.put("status", 200);
-
-        return respJson;
     }
 
 
