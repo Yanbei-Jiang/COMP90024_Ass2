@@ -44,9 +44,11 @@ def new_tweet_analysis(tweet_obj):
             if "extended_tweet" in tweet_obj[key].keys():
                 text = tweet_obj[key]["extended_tweet"]["full_text"]
                 break
-            else:
+            elif "text" in tweet_obj[key].keys():
                 text = tweet_obj[key]["text"]
                 break
+            else:
+                text = ""
 
     processed_text = preprocess(text)
     sentiment = sentiment_analysis(processed_text)
