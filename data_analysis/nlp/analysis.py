@@ -49,6 +49,7 @@ def new_tweet_analysis(tweet_obj):
                 break
             else:
                 text = ""
+                break
 
     processed_text = preprocess(text)
     sentiment = sentiment_analysis(processed_text)
