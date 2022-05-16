@@ -40,7 +40,6 @@ export default function keplerMap (props){
         {"name": "area","format":"","type":"string"},
         {"name": "value","format":"","type":"integer"}
     ]
-    var rows = []
     for (var key of Object.keys(props.data)){
         var curRow = []
         if (key !== "status"){

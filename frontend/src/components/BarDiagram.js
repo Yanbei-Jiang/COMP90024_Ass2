@@ -1,6 +1,5 @@
 import React from "react";
-import {BarChart, BarSeries} from "reaviz"
-import chroma from "chroma-js"
+import {BarChart} from "reaviz"
 
 
 

@@ -1,14 +1,13 @@
 import React from "react";
-import {Panel ,Table,PanelGroup, Placeholder} from "rsuite"
+import {Panel ,Table,PanelGroup} from "rsuite"
 import "rsuite/dist/rsuite.min.css";
 import group from "../data/group.json"
-const { Paragraph } = Placeholder;
 
 export default function MainPage(){
     return(
         <div>
         <PanelGroup accordion bordered>
-            <Panel header="COMP90024 Assignment2 - Team 58" expanded shaded>
+            <Panel header="COMP90024 Assignment2 - Team 03" expanded shaded>
                 <p style={{fontSize:18}}>
                     The goal of this project is to build our system on UniMelb Research Cloud(MRC), hence we used ansible to deploy our web application in an automatic way. Ansible is an open-source tool for application-deployment which can enable infrastructure as code. It is a simple but powerful automation for multi-platform computer support. Ansible is mainly focused on IT professionals, who use it to deploy application, update server and cloud provisioning. Because of the fact that Ansible does not need any agent software and additional security infrastructure, it is convenient to deploy. Section 3.3 shows more details.
                 </p>

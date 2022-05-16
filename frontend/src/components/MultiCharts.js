@@ -1,4 +1,4 @@
-import React, {useState,useEffect}from "react";
+import React from "react";
 import PieDiagram from "./PieDiagram";
 import BarDiagram from "./BarDiagram";
 import {Panel,Grid,} from "rsuite"
@@ -24,46 +24,8 @@ export default function MultiCharts(props){
     var educateSentiCombine = []
     var housePloarCombine = []
     var houseSentiCombine = []
-    var educate = []
-    var houses = []
     var outPairs = []
     var pairs  = [["Syd","Rest_of_NSW"],["Ade","Rest_of_SA"],["MEL","Rest_of_VIC"],["BRI","Rest_of_QLD"]]
-    var location = [{"Melbourn City":[144.913581,-37.839086,144.994266,-37.781922]},
-                    {"Melbourn Kew": [144.999392,-37.855040,145.141140,-37.786685]},
-                    {"Hopper Crossing": [144.633666,-37.974500,144.913581,-37.694900]}]
-    var dateHash = {
-        "Jan": "01",
-        "Feb": "02",
-        "Mar": "03",
-        "Apr": "04",
-        "May": "05",
-        "Jun": "06",
-        "Jul": "07",
-        "Aug": "08",
-        "Sep": "09",
-        "Oct": "10",
-        "Nov": "11",
-        "Dec": "12"
-    };
-
-    function checkLocation(point,coords){
-        if (coords[0] < point[0] && point[0] < coords[1]){
-            if (coords[1] < point[1] &&  point[1] < coords[2]){
-                return true
-            }
-            return false
-        }
-    }
-    function coordsInLoc(point){
-        for (var datas of location){
-            for (var key of Object.keys(datas)){
-                if (checkLocation(point,datas[key])){
-                    return key
-                }
-            }
-        }
-        return "other"
-    }
     
     if (props.type === "aurin"){
         for (const key in props.data){
@@ -107,7 +69,7 @@ export default function MultiCharts(props){
                     }
                 }
                 for (var years of Object.keys(yearSum)){
-                    if (yearSum[years] != 0 ){
+                    if (yearSum[years] !== 0 ){
                         let curVal = {
                             key : years,
                             data : yearSum[years]
@@ -172,10 +134,10 @@ export default function MultiCharts(props){
                         }
                     }
                     if(key.includes("sum")){
-                        for (var i =0;i<props.data[key][kkey].length;i++){
-                            var date = props.data[key][kkey][i]["date"].split("-")
-                            if(date[0] in yearSum){
-                                yearSum[date[0]]+=props.data[key][kkey][i]["value"]
+                        for (var j =0;j<props.data[key][kkey].length;j++){
+                            var dates = props.data[key][kkey][j]["date"].split("-")
+                            if(dates[0] in yearSum){
+                                yearSum[dates[0]]+=props.data[key][kkey][j]["value"]
                             }
                         }
                         if (flag ===0){
@@ -183,7 +145,7 @@ export default function MultiCharts(props){
                         }
                     }
                     for (var years of Object.keys(yearSum)){
-                        if (yearSum[years] != 0 && yearCount[years] !=0){
+                        if (yearSum[years] !== 0 && yearCount[years] !== 0){
                             let curVal = {
                                 key : years,
                                 data : yearSum[years]/yearCount[years]

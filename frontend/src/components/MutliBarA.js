@@ -1,5 +1,5 @@
 import React from "react";
-import {BarChart,BarSeries,Bar,BarLabel} from "reaviz"
+import {BarChart,BarSeries} from "reaviz"
 
 export default function MultiBarA(props){
 

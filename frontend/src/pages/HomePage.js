@@ -3,7 +3,7 @@ import KMaps from "../components/KeplerMap"
 import MultiCharts from "../components/MultiCharts";
 import MainPage from "../components/MainPage";
 import axios from "../common/axios";
-import {Sidenav, Nav, Dropdown,Container, Content, Header, Sidebar,InputPicker } from 'rsuite';
+import {Sidenav, Nav, Dropdown,Container, Content, Sidebar} from 'rsuite';
 import {Dashboard, AdvancedAnalytics, UserBadge } from '@rsuite/icons';
 import "rsuite/dist/rsuite.min.css";
 
@@ -13,13 +13,13 @@ export default function HomePage() {
     const [tweets,setTweets] = useState()
     useEffect(()=>{
         axios.get("/data/get_aurin").then(response=>{
-            if(response.data.status==200){
+            if(response.data.status===200){
                 console.log(response.data)
                 setAurin(response.data)
             }
         })
         axios.get("/data/get_tweets").then(response=>{
-            if(response.data.status==200){
+            if(response.data.status===200){
                 console.log(response.data)
                 setTweets(response.data)
             }
