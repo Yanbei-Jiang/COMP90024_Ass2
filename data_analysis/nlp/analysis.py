@@ -8,9 +8,12 @@ def old_tweet_analysis(tweet_obj):
         if key != "_id" and key != "_rev":
             new_tweet_obj[key] = tweet_obj[key]
     text = new_tweet_obj["doc"]["text"]
-    coordinates = new_tweet_obj["doc"]["place"]["bounding_box"]["coordinates"][0]
-    area = filter_area(coordinates)
-    new_tweet_obj["melbourne_area"] = area
+    if new_tweet_obj["doc"]["place"]:
+        coordinates = new_tweet_obj["doc"]["place"]["bounding_box"]["coordinates"][0]
+        area = filter_area(coordinates)
+        new_tweet_obj["melbourne_area"] = area
+    else: 
+        new_tweet_obj["melbourne_area"] = "other"
     processed_text = preprocess(text)
     sentiment = sentiment_analysis(processed_text)
     new_tweet_obj["sentiment"] = sentiment
@@ -31,10 +34,13 @@ def new_tweet_analysis(tweet_obj):
     for key in tweet_obj.keys():
         # only look at the third key (i.e. "Hoppers_Crossing_1522304716188700672_stream")
         if key != "_id" and key != "_rev" and key !="id":
-            coordinates = tweet_obj[key]["place"]["bounding_box"]["coordinates"][0]
-            area = filter_area(coordinates)
             new_tweet_obj = tweet_obj[key]
-            new_tweet_obj["melbourne_area"] = area
+            if new_tweet_obj["doc"]["place"]:
+                coordinates = tweet_obj[key]["place"]["bounding_box"]["coordinates"][0]
+                area = filter_area(coordinates)
+                new_tweet_obj["melbourne_area"] = area
+            else:
+                new_tweet_obj["melbourne_area"] = "other"
             if "extended_tweet" in tweet_obj[key].keys():
                 text = tweet_obj[key]["extended_tweet"]["full_text"]
                 break
