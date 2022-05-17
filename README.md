@@ -7,6 +7,9 @@ This project presents all the works have been doen for the University of Melbour
     YanBei Jiang - 1087029
     Yiwen Zhang - 1002781
     Zening Zhang - 1078374
+# Project Overview
+Melbourne is one of the most famous cities in the world. Melbourne was the world's most liveable city for eight years in a row. However, in 2012, Melbourne is “only” ninth. Although it is a good ranking, some problems may happen in Melbourne. Twitter is one of the most popular social applications. There are many people in Melbourne who use Twitter. 
+In this project, we will develop a cloud based solution to analyze twitter data from multiple perspectives.. This application is deployed on Unimelb Research Cloud(MRC).
 
 # Ansible-playbook:
 1. - Make sure you have at least 4 instances available and at least 400GB disk space on MRC 
@@ -31,3 +34,6 @@ This project presents all the works have been doen for the University of Melbour
 
 # Videos
 - https://youtu.be/dki5nmgq5hg
+
+# Website
+Please visit our website at http://172.26.133.159:3000/
